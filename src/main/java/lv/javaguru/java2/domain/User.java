@@ -1,8 +1,5 @@
 package lv.javaguru.java2.domain;
 
-/**
- * Created by Viktor on 01/07/2014.
- */
 public class User {
 
     private long userId;
