@@ -10,9 +10,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Viktor on 01/07/2014.
- */
 public class UserDAOImpl extends DAOImpl implements UserDAO {
 
     @Override
@@ -26,9 +23,11 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement =
-                    connection.prepareStatement("insert into USERS values (default, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                    connection.prepareStatement("insert into USERS values (default, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPassword());
 
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -61,10 +60,35 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
                 user.setUserId(resultSet.getLong("UserID"));
                 user.setFirstName(resultSet.getString("FirstName"));
                 user.setLastName(resultSet.getString("LastName"));
+                user.setEmail(resultSet.getString("Email"));
+                user.setPassword(resultSet.getString("Password"));
             }
             return user;
         } catch (Throwable e) {
             System.out.println("Exception while execute UserDAOImpl.getById()");
+            e.printStackTrace();
+            throw new DBException(e);
+        } finally {
+            closeConnection(connection);
+        }
+    }
+
+    @Override
+    public Long getIdByEmail(String email) throws DBException {
+        Connection connection = null;
+
+        try {
+            connection = getConnection();
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("select * from USERS where Email = ?");
+            preparedStatement.setString(1, email);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong("UserID");
+            }
+            return null;
+        } catch (Throwable e) {
+            System.out.println("Exception while execute UserDAOImpl.getIdByEmail()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
