@@ -21,10 +21,7 @@ public class UserRegistration extends HttpServlet {
         resp.setContentType("text/html");
 
         User user = new User();
-        user.setFirstName(req.getParameter("firstname"));
-        user.setLastName(req.getParameter("lastname"));
-        user.setEmail(req.getParameter("email"));
-        user.setPassword(req.getParameter("password"));
+        getRegistrationData(user, req);
 
         UserDAO userDAO = new UserDAOImpl();
 
@@ -50,21 +47,27 @@ public class UserRegistration extends HttpServlet {
         }
 
         req.setAttribute("message", message);
-        ServletContext servletContext = getServletContext();
-        RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/UserRegistration.jsp");
-        requestDispatcher.forward(req, resp);
+        requestDispatcherForward(req, resp);
 
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		resp.setContentType("text/html");
+        requestDispatcherForward(req, resp);
+	}
 
+    private void requestDispatcherForward(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/UserRegistration.jsp");
         requestDispatcher.forward(req, resp);
+    }
 
-	}
+    private void getRegistrationData(User user, HttpServletRequest req){
+        user.setFirstName(req.getParameter("firstname"));
+        user.setLastName(req.getParameter("lastname"));
+        user.setEmail(req.getParameter("email"));
+        user.setPassword(req.getParameter("password"));
+    }
 
 }

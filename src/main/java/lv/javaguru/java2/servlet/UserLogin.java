@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class UserLogin extends HttpServlet {
 
@@ -19,7 +18,6 @@ public class UserLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		resp.setContentType("text/html");
-		PrintWriter out = resp.getWriter();
 
 		String username = req.getParameter("email");
 		String password = req.getParameter("password");
@@ -48,21 +46,20 @@ public class UserLogin extends HttpServlet {
 		}
 
 		req.setAttribute("message", message);
-		ServletContext servletContext = getServletContext();
-		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/UserLogin.jsp");
-		requestDispatcher.forward(req, resp);
+		requestDispatcherForward(req, resp);
 
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		resp.setContentType("text/html");
+		requestDispatcherForward(req, resp);
+	}
 
+	private void requestDispatcherForward(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ServletContext servletContext = getServletContext();
 		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/UserLogin.jsp");
 		requestDispatcher.forward(req, resp);
-
 	}
 
 }
