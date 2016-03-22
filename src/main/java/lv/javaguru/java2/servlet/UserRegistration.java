@@ -25,49 +25,43 @@ public class UserRegistration extends HttpServlet {
 
         UserDAO userDAO = new UserDAOImpl();
 
-        String message = "User registered!";
-
         try {
             if (userDAO.getIdByEmail(req.getParameter("email")) == null) {
                 if (req.getParameter("password").equals(req.getParameter("confirm password"))){
                     userDAO.create(user);
-                    resp.sendRedirect("/java2/login");
-                    return;
+                    resp.sendRedirect("/java2/login?param=User registered successfully!");
                 }
                 else {
-                    message = "'Password' and 'Confirm Password' do not match!";
+                    redirect(resp, "'Password' and 'Confirm Password' do not match!");
                 }
             }
             else{
-                message = "User with such email already exists!";
+                redirect(resp, "User with such email already exists!");
             }
         }
         catch (DBException e) {
             e.printStackTrace();
         }
 
-        req.setAttribute("message", message);
-        requestDispatcherForward(req, resp);
-
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
-        requestDispatcherForward(req, resp);
-	}
-
-    private void requestDispatcherForward(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext servletContext = getServletContext();
         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/UserRegistration.jsp");
         requestDispatcher.forward(req, resp);
-    }
+	}
 
     private void getRegistrationData(User user, HttpServletRequest req){
         user.setFirstName(req.getParameter("firstname"));
         user.setLastName(req.getParameter("lastname"));
         user.setEmail(req.getParameter("email"));
         user.setPassword(req.getParameter("password"));
+    }
+
+    private void redirect(HttpServletResponse resp, String message) throws ServletException, IOException {
+        resp.sendRedirect("/java2/registration?param=" + message);
     }
 
 }

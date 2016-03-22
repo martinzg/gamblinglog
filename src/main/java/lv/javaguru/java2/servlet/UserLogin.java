@@ -23,21 +23,20 @@ public class UserLogin extends HttpServlet {
 		String password = req.getParameter("password");
 
 		UserDAO userDAO = new UserDAOImpl();
-
-		String message = "Login Success!";
 		Long userId;
 
 		try {
 			userId = userDAO.getIdByEmail(username);
 			if (userId == null){
-				message = "Invalid Email!";
+				redirect(resp, "Invalid Email!");
 			}
 			else {
 				if (userDAO.getById(userId).getPassword().equals(password)){
-					message = "Login Success!";
+					//here must be redirect to user profile
+					redirect(resp, "Login Success!");
 				}
 				else {
-					message = "Invalid Password!";
+					redirect(resp, "Invalid Password!");
 				}
 			}
 		}
@@ -45,21 +44,18 @@ public class UserLogin extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		req.setAttribute("message", message);
-		requestDispatcherForward(req, resp);
-
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
-		requestDispatcherForward(req, resp);
-	}
-
-	private void requestDispatcherForward(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ServletContext servletContext = getServletContext();
 		RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher("/UserLogin.jsp");
 		requestDispatcher.forward(req, resp);
+	}
+
+	private void redirect(HttpServletResponse resp, String message) throws ServletException, IOException {
+		resp.sendRedirect("/java2/login?param=" + message);
 	}
 
 }

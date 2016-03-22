@@ -66,4 +66,14 @@
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>ForgotPassword</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.ForgotPassword</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>ForgotPassword</servlet-name>
+        <url-pattern>/forgotpassword</url-pattern>
+    </servlet-mapping>
+
 </web-app>

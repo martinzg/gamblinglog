@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Registration page</title>
@@ -24,7 +25,10 @@
         <br><br>
         <input type="submit" name="submit">
     </form>
-    <h4 style="color:red">${message}</h4>
+    <c:set var="message" scope="session" value='<%= request.getParameter("param") %>'/>
+    <c:if test="${message != null}">
+        <h4 style="color:red"><c:out value="${message}" /></h4>
+    </c:if>
 
 </body>
 </html>

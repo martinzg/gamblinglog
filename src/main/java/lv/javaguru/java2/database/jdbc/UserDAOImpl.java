@@ -149,11 +149,12 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update USERS set FirstName = ?, LastName = ? " +
-                            "where UserID = ?");
+                    .prepareStatement("update USERS set FirstName = ?, LastName = ?, Email = ?, Password = ? where UserID = ?");
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
-            preparedStatement.setLong(3, user.getUserId());
+            preparedStatement.setString(3, user.getEmail());
+            preparedStatement.setString(4, user.getPassword());
+            preparedStatement.setLong(5, user.getUserId());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
             System.out.println("Exception while execute UserDAOImpl.update()");
