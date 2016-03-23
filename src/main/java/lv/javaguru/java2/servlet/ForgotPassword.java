@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Random;
+import java.security.SecureRandom;
 
 public class ForgotPassword extends HttpServlet {
 
@@ -52,10 +52,11 @@ public class ForgotPassword extends HttpServlet {
 	}
 
     private String generatePassword(){
-        Random random = new Random();
+        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        SecureRandom random = new SecureRandom();
         StringBuilder password = new StringBuilder();
-        for (int i=0; i<10; i++){
-            password.append(random.nextInt(9 + 1));
+        for (int i=0; i<20; i++){
+            password.append(chars.charAt(random.nextInt(chars.length())));
         }
         return password.toString();
     }
