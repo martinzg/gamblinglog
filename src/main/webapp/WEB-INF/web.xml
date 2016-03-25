@@ -75,5 +75,15 @@
         <servlet-name>ForgotPassword</servlet-name>
         <url-pattern>/forgotpassword</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>GamblingSiteAdd</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.GamblingSiteAddServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GamblingSiteAdd</servlet-name>
+        <url-pattern>/gambling-site-add</url-pattern>
+    </servlet-mapping>
 
 </web-app>

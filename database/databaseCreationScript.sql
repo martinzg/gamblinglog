@@ -21,6 +21,21 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`users` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 1002;
 
+-- -----------------------------------------------------
+-- Table `Java2_test`.`sites`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `java2_test`.`sites` ;
+
+CREATE TABLE IF NOT EXISTS `java2_test`.`sites` (
+  `ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Name` CHAR(50) NOT NULL,
+  `URL` CHAR(255) NOT NULL,
+  `Description` CHAR(255) NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+ENGINE = InnoDB
+AUTO_INCREMENT = 1002;
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
