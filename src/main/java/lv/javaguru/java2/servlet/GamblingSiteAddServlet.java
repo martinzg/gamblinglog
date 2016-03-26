@@ -47,5 +47,8 @@ public class GamblingSiteAddServlet extends HttpServlet {
 		site.setName(req.getParameter("siteName"));
 		site.setURL(req.getParameter("siteURL"));
 		site.setDescription(req.getParameter("siteDescription"));
+
+		// FIXME: Get userId from session.
+		site.setUserId(1002L);
 	}
 }

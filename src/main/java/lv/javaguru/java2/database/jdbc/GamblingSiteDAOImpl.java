@@ -23,10 +23,11 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 		try {
 			connection = getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(
-					"insert into SITES values (default, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+					"insert into SITES values (default, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, site.getName());
 			preparedStatement.setString(2, site.getURL());
 			preparedStatement.setString(3, site.getDescription());
+			preparedStatement.setLong(4, site.getUserId());
 
 			preparedStatement.executeUpdate();
 			ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -59,6 +60,7 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 				site.setName(resultSet.getString("Name"));
 				site.setURL(resultSet.getString("URL"));
 				site.setDescription(resultSet.getString("Description"));
+				site.setUserId(resultSet.getLong("UserID"));
 			}
 			return site;
 		} catch (Throwable e) {
@@ -98,12 +100,13 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			PreparedStatement preparedStatement = connection
-					.prepareStatement("update SITES set Name = ?, URL = ?, Description = ? " + "where ID = ?");
+			PreparedStatement preparedStatement = connection.prepareStatement(
+					"update SITES set Name = ?, URL = ?, Description = ?, UserID = ? " + "where ID = ?");
 			preparedStatement.setString(1, site.getName());
 			preparedStatement.setString(2, site.getURL());
 			preparedStatement.setString(3, site.getDescription());
 			preparedStatement.setLong(4, site.getId());
+			preparedStatement.setLong(5, site.getUserId());
 			preparedStatement.executeUpdate();
 		} catch (Throwable e) {
 			System.out.println("Exception while execute GamblingSiteDAOImpl.update()");
@@ -129,6 +132,7 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 				site.setName(resultSet.getString("Name"));
 				site.setURL(resultSet.getString("URL"));
 				site.setDescription(resultSet.getString("Description"));
+				site.setUserId(resultSet.getLong("UserID"));
 				sites.add(site);
 			}
 		} catch (Throwable e) {
