@@ -14,6 +14,6 @@ public interface GamblingSiteDAO {
 
 	void update(GamblingSite site) throws DBException;
 
-	List<GamblingSite> getAll() throws DBException;
+	List<GamblingSite> getAllSitesByUserId(Long id) throws DBException;
 
 }

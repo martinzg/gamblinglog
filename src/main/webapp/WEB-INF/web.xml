@@ -86,4 +86,24 @@
         <url-pattern>/gambling-site-add</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>UserProfile</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.UserProfile</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UserProfile</servlet-name>
+        <url-pattern>/userprofile</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>GamblingSiteServlet</servlet-name>
+        <servlet-class>lv.javaguru.java2.servlet.GamblingSiteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>GamblingSiteServlet</servlet-name>
+        <url-pattern>/gamblingsite</url-pattern>
+    </servlet-mapping>
+
 </web-app>

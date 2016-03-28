@@ -28,7 +28,7 @@ public class GamblingSiteAddServlet extends HttpServlet {
 
 		try {
 			siteDAO.create(site);
-			response.sendRedirect("/java2/gambling-site-add?param=Success");
+			response.sendRedirect("/java2/gamblingsite?id=" + request.getParameter("id") + "&param=Success");
 		} catch (DBException e) {
 			e.printStackTrace();
 			response.sendRedirect("/java2/gambling-site-add?param=Failure");
@@ -49,6 +49,6 @@ public class GamblingSiteAddServlet extends HttpServlet {
 		site.setDescription(req.getParameter("siteDescription"));
 
 		// FIXME: Get userId from session.
-		site.setUserId(1002L);
+		site.setUserId(Long.parseLong(req.getParameter("id")));
 	}
 }

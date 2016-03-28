@@ -32,8 +32,7 @@ public class UserLogin extends HttpServlet {
 			}
 			else {
 				if (userDAO.getById(userId).getPassword().equals(password)){
-					//here must be redirect to user profile
-					redirect(resp, "Login Success!");
+					resp.sendRedirect("/java2/userprofile?id=" + userDAO.getIdByEmail(username));
 				}
 				else {
 					redirect(resp, "Invalid Password!");

@@ -118,13 +118,13 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 	}
 
 	@Override
-	public List<GamblingSite> getAll() throws DBException {
-		List<GamblingSite> sites = new ArrayList<GamblingSite>();
+	public List<GamblingSite> getAllSitesByUserId(Long id) throws DBException {
+		List<GamblingSite> sites = new ArrayList<>();
 		Connection connection = null;
 		try {
 			connection = getConnection();
-			PreparedStatement preparedStatement = connection.prepareStatement("select * from SITES");
-
+				PreparedStatement preparedStatement = connection.prepareStatement("select * from SITES where UserID = ?");
+				preparedStatement.setLong(1, id);
 			ResultSet resultSet = preparedStatement.executeQuery();
 			while (resultSet.next()) {
 				GamblingSite site = new GamblingSite();
