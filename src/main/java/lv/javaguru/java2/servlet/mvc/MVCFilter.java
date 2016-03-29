@@ -1,5 +1,7 @@
 package lv.javaguru.java2.servlet.mvc;
 
+import lv.javaguru.java2.servlet.mvcTest.*;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,9 +17,6 @@ public class MVCFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         urlToControllerMap = new HashMap<>();
         urlToControllerMap.put("/hello", new HelloWorldController());
-        urlToControllerMap.put("/login", new LoginController());
-        urlToControllerMap.put("/userprofile", new UserProfileController());
-        urlToControllerMap.put("/registration", new UserRegistrationController());
     }
 
     @Override
@@ -38,13 +37,14 @@ public class MVCFilter implements Filter {
             model = controller.processRequestPost(req);
         }
 
+
         model.getJspName();
 
         req.setAttribute("data", model.getData());
-        req.setAttribute("message", model.getMessage());
 
         ServletContext context = req.getServletContext();
-        RequestDispatcher requestDispatcher = context.getRequestDispatcher(model.getJspName());
+        RequestDispatcher requestDispatcher =
+                context.getRequestDispatcher(model.getJspName());
         requestDispatcher.forward(req, resp);
 
     }
