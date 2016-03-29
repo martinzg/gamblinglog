@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -28,8 +29,8 @@ public class GamblingSiteServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html");
-
-		Long id = Long.parseLong(req.getParameter("id"));
+		HttpSession session = req.getSession();
+		Long id = Long.parseLong(session.getAttribute("userId").toString());
 		GamblingSiteDAO gamblingSiteDAO = new GamblingSiteDAOImpl();
 
 		try {

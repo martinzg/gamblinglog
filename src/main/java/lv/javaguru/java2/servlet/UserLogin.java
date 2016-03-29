@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class UserLogin extends HttpServlet {
@@ -18,6 +19,7 @@ public class UserLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		resp.setContentType("text/html");
+		HttpSession session = req.getSession();
 
 		String username = req.getParameter("email");
 		String password = req.getParameter("password");
@@ -32,7 +34,8 @@ public class UserLogin extends HttpServlet {
 			}
 			else {
 				if (userDAO.getById(userId).getPassword().equals(password)){
-					resp.sendRedirect("/java2/userprofile?id=" + userDAO.getIdByEmail(username));
+					session.setAttribute("userId", userId);
+					resp.sendRedirect("/java2/userprofile");
 				}
 				else {
 					redirect(resp, "Invalid Password!");

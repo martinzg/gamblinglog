@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.GamblingSiteDAO;
@@ -28,7 +29,7 @@ public class GamblingSiteAddServlet extends HttpServlet {
 
 		try {
 			siteDAO.create(site);
-			response.sendRedirect("/java2/gamblingsite?id=" + request.getParameter("id") + "&param=Success");
+			response.sendRedirect("/java2/gamblingsite?param=Success");
 		} catch (DBException e) {
 			e.printStackTrace();
 			response.sendRedirect("/java2/gambling-site-add?param=Failure");
@@ -49,6 +50,6 @@ public class GamblingSiteAddServlet extends HttpServlet {
 		site.setDescription(req.getParameter("siteDescription"));
 
 		// FIXME: Get userId from session.
-		site.setUserId(Long.parseLong(req.getParameter("id")));
+		site.setUserId(Long.parseLong(req.getSession().getAttribute("userId").toString()));
 	}
 }

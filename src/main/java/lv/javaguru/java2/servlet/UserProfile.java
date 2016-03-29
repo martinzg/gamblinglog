@@ -15,7 +15,7 @@ public class UserProfile extends HttpServlet {
 
 		resp.setContentType("text/html");
 		if (req.getParameter("show sites") != null){
-			resp.sendRedirect("/java2/gamblingsite?id=" + req.getParameter("id"));
+			resp.sendRedirect("/java2/gamblingsite");
 		}
 
 	}
