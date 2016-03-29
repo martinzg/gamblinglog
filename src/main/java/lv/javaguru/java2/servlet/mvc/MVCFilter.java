@@ -1,7 +1,5 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.servlet.mvcTest.*;
-
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
