@@ -18,6 +18,8 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/login", new LoginController());
         urlToControllerMap.put("/userprofile", new UserProfileController());
         urlToControllerMap.put("/registration", new UserRegistrationController());
+        urlToControllerMap.put("/gamblingsites", new GamblingSitesController());
+        urlToControllerMap.put("/gambling-site-add", new GamblingSitesController());
     }
 
     @Override
