@@ -1,5 +1,7 @@
 package lv.javaguru.java2.servlet.mvc;
 
+import lv.javaguru.java2.servlet.mvcTest.*;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +25,19 @@ public class MVCFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
 
         String contextURI = req.getServletPath();
+        String method = req.getMethod();
+
         MVCController controller = urlToControllerMap.get(contextURI);
-        MVCModel model = controller.processRequest(req);
+        MVCModel model;
+
+        if (method.equalsIgnoreCase("GET")){
+            model = controller.processRequestGet(req);
+        }
+        else {
+            model = controller.processRequestPost(req);
+        }
+
+
         model.getJspName();
 
         req.setAttribute("data", model.getData());

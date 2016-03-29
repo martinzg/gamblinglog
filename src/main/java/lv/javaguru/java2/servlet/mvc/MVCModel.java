@@ -1,8 +1,6 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import javax.servlet.http.HttpServletRequest;
-
-public class MVCModel implements MVCController {
+public class MVCModel {
 
     private String jspName;
     private Object data;
@@ -21,8 +19,4 @@ public class MVCModel implements MVCController {
         return data;
     }
 
-    @Override
-    public MVCModel processRequest(HttpServletRequest req) {
-        return null;
-    }
 }
