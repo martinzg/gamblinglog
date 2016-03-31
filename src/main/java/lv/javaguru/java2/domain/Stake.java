@@ -5,7 +5,8 @@ import java.util.Date;
 /**
  * Created by tyoma17 on 29.03.2016.
  */
-public class StakeInfo {
+public class Stake {
+    private long stakeID;
     private Date date;
     private String url;
     private String event;
@@ -15,8 +16,16 @@ public class StakeInfo {
     private String result;
     private String comment;
 
-    public Date getDate() {
-        return date;
+    public long getID() {
+        return stakeID;
+    }
+
+    public void setStakeID(long stakeID) {
+        this.stakeID = stakeID;
+    }
+
+    public java.sql.Date getDate() {
+        return new java.sql.Date(date.getTime());
     }
 
     public void setDate(Date date) {

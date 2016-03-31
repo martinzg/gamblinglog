@@ -112,7 +112,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
                 users.add(user);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting customer list UserDAOImpl.getList()");
+            System.out.println("Exception while getting customer list UserDAOImpl.getAll()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
