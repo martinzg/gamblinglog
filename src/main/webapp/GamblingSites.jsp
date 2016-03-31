@@ -32,6 +32,7 @@
             <th>Site URL</th>
             <th>Site Description</th>
         </tr>
+        <c:set var="gamblingSiteList" scope="session" value='<%= request.getAttribute("data") %>'/>
         <c:if test="${not empty gamblingSiteList}">
             <c:forEach var="site" varStatus="status" items="${gamblingSiteList}">
                 <tr>
@@ -43,7 +44,7 @@
         </c:if>
     </table>
 
-    <c:set var="message" scope="session" value='<%= request.getParameter("param") %>'/>
+    <c:set var="message" scope="session" value='<%= request.getAttribute("message") %>'/>
     <c:if test="${message != null}">
         <h4 style="color:red"><c:out value="${message}" /></h4>
     </c:if>

@@ -4,11 +4,13 @@ public class MVCModel {
 
     private String jspName;
     private Object data;
+    private String message;
 
 
-    public MVCModel(String jspName, Object data) {
+    public MVCModel(String jspName, Object data, String message) {
         this.jspName = jspName;
         this.data = data;
+        this.message = message;
     }
 
     public String getJspName() {
@@ -17,6 +19,10 @@ public class MVCModel {
 
     public Object getData() {
         return data;
+    }
+
+    public String getMessage() {
+        return message;
     }
 
 }
