@@ -8,7 +8,8 @@ import java.util.Properties;
 public class SendEmailFromGmail {
 
     private String recipient;
-    private String password;
+    //private String password;
+    private String link;
 
     String from = "gamblingloginfo@gmail.com";
     private final String gmailUsername = "gamblingloginfo";
@@ -16,9 +17,9 @@ public class SendEmailFromGmail {
 
     Properties props = new Properties();
 
-    public SendEmailFromGmail(String recipient, String password){
+    public SendEmailFromGmail(String recipient, String link){
         this.recipient = recipient;
-        this.password = password;
+        this.link = link;
     }
 
     private void setProperties(){
@@ -44,8 +45,9 @@ public class SendEmailFromGmail {
             MimeMessage message = new MimeMessage(getSession());
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(recipient));
-            message.setSubject("Your new password to GamblingLog!");
-            message.setText("Your new password: " + password);
+            message.setSubject("Reset your GamblingLog password!");
+            //message.setText("Your new password: " + password);
+            message.setText("To reset your password use following link: " + link);
             Transport.send(message);
         }
         catch (MessagingException e) {

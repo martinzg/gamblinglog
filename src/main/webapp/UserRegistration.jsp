@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Registration page</title>
+    <title>Registration</title>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
         Confirm Password:<br>
         <input type="password" name="confirm password" required>
         <br><br>
-        <input type="submit" name="submit">
+        <input type="submit" name="submit" value="Submit">
     </form>
     <c:set var="message" scope="session" value='<%= request.getAttribute("message") %>'/>
     <c:if test="${message != null}">

@@ -2,11 +2,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-    <title>Reset Password page</title>
+    <title>Forgot Password</title>
 </head>
 <body>
 
-    <h1>Reset password:</h1>
+    <h1>Forgot password:</h1>
     <form method="post">
         <h4>To reset your password enter your email and press Reset.</h4>
         Email:<br>
@@ -14,7 +14,7 @@
         <br><br>
         <input type="submit" name="submit" value="Reset">
     </form>
-    <c:set var="message" scope="session" value='<%= request.getParameter("param") %>'/>
+    <c:set var="message" scope="session" value='<%= request.getAttribute("message") %>'/>
     <c:if test="${message != null}">
         <h4 style="color:red"><c:out value="${message}" /></h4>
     </c:if>
