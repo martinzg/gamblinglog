@@ -1,11 +1,19 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class MVCFilter implements Filter {
 
@@ -19,7 +27,7 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/userprofile", new UserProfileController());
         urlToControllerMap.put("/registration", new UserRegistrationController());
         urlToControllerMap.put("/gamblingsites", new GamblingSitesController());
-        urlToControllerMap.put("/gambling-site-add", new GamblingSitesController());
+		urlToControllerMap.put("/gambling-site-add", new GamblingSiteAddController());
         urlToControllerMap.put("/forgotpassword", new ForgotPasswordController());
         urlToControllerMap.put("/changepassword", new ChangePasswordController());
     }
