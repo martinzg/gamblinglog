@@ -16,6 +16,9 @@ public class GamblingSiteAddController implements MVCController {
 
 	@Override
 	public MVCModel processRequestPost(HttpServletRequest request) {
+		if (request.getParameter("back") != null) {
+			return new MVCModel("/Redirect.jsp", "/java2/gamblingsites", null);
+		}
 
 		GamblingSite site = new GamblingSite();
 		GamblingSiteDAO siteDAO = new GamblingSiteDAOImpl();
