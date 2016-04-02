@@ -1,19 +1,17 @@
-package lv.javaguru.java2.database.jdbc;
+package test.lv.javaguru.java2.database.jdbc;
 
 import lv.javaguru.java2.database.DBException;
+import lv.javaguru.java2.database.jdbc.DAOImpl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Viktor on 01/07/2014.
- */
 public class DatabaseCleaner extends DAOImpl {
 
     private List<String> getTableNames() {
-        List<String> tableNames = new ArrayList<String>();
+        List<String> tableNames = new ArrayList<>();
         tableNames.add("USERS");
         return tableNames;
     }
@@ -23,8 +21,7 @@ public class DatabaseCleaner extends DAOImpl {
             Connection connection = getConnection();
             try {
                 connection = getConnection();
-                PreparedStatement preparedStatement = connection
-                        .prepareStatement("delete from " + tableName);
+                PreparedStatement preparedStatement = connection.prepareStatement("delete from " + tableName);
                 preparedStatement.executeUpdate();
             } catch (Throwable e) {
                 System.out.println("Exception while execute cleanDatabase() for table " + tableName);
