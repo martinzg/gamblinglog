@@ -97,7 +97,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
     }
 
     public List<User> getAll() throws DBException {
-        List<User> users = new ArrayList<User>();
+        List<User> users = new ArrayList<>();
         Connection connection = null;
         try {
             connection = getConnection();
@@ -109,6 +109,8 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
                 user.setUserId(resultSet.getLong("UserID"));
                 user.setFirstName(resultSet.getString("FirstName"));
                 user.setLastName(resultSet.getString("LastName"));
+                user.setEmail(resultSet.getString("Email"));
+                user.setPassword(resultSet.getString("Password"));
                 users.add(user);
             }
         } catch (Throwable e) {

@@ -29,7 +29,7 @@ public class LoginControllerTest {
     public void testSuccessfulLogin() throws Exception {
 
         doReturn("martinsgailums@gmail.com").when(req).getParameter("email");
-        doReturn("h").when(req).getParameter("password");
+        doReturn("aaa").when(req).getParameter("password");
         doReturn(session).when(req).getSession();
 
         MVCModel mvcModel = loginController.processRequestPost(req);
