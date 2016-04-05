@@ -30,6 +30,7 @@ public class MVCFilter implements Filter {
 		urlToControllerMap.put("/gambling-site-add", new GamblingSiteAddController());
         urlToControllerMap.put("/forgotpassword", new ForgotPasswordController());
         urlToControllerMap.put("/changepassword", new ChangePasswordController());
+        urlToControllerMap.put("/addlandbasedgamblingevent", new AddOfflineGamingEventController());
     }
 
     @Override
