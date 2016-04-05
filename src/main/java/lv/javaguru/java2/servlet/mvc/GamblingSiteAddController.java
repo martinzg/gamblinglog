@@ -2,12 +2,21 @@ package lv.javaguru.java2.servlet.mvc;
 
 import javax.servlet.http.HttpServletRequest;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.GamblingSiteDAO;
 import lv.javaguru.java2.database.jdbc.GamblingSiteDAOImpl;
 import lv.javaguru.java2.domain.GamblingSite;
 
 public class GamblingSiteAddController implements MVCController {
+
+	private final GamblingSiteDAO siteDAO;
+
+	public GamblingSiteAddController() {
+		this(new GamblingSiteDAOImpl());
+	}
+
+	public GamblingSiteAddController(GamblingSiteDAO siteDAO) {
+		this.siteDAO = siteDAO;
+	}
 
 	@Override
 	public MVCModel processRequestGet(HttpServletRequest request) {
@@ -20,17 +29,14 @@ public class GamblingSiteAddController implements MVCController {
 			return new MVCModel("/Redirect.jsp", "/java2/gamblingsites", null);
 		}
 
-		GamblingSite site = new GamblingSite();
-		GamblingSiteDAO siteDAO = new GamblingSiteDAOImpl();
-
-		getGamblingSiteAddData(site, request);
-
 		try {
+			GamblingSite site = new GamblingSite();
+			getGamblingSiteAddData(site, request);
 			siteDAO.create(site);
 			return new MVCModel("/GamblingSiteAdd.jsp", null, "Success!");
-		} catch (DBException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			return new MVCModel("/Redirect.jsp", null, "Failure!");
+			return new MVCModel("/GamblingSiteAdd.jsp", null, "Failure!");
 		}
 
 	}
