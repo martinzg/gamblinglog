@@ -5,45 +5,47 @@ import static org.mockito.Mockito.*;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
-import lv.javaguru.java2.database.jdbc.UserDAOImpl;
 import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.servlet.mvc.LoginController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import lv.javaguru.java2.servlet.mvc.SpringAppConfig;
+import org.junit.*;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringAppConfig.class)
+
 public class LoginControllerTest {
 
+    @Autowired
     private LoginController loginController;
-    private static UserDAO userDAO;
-    private static String email = "email@email.com";
-    private static String password = "password";
+
+    @Autowired
+    private UserDAO userDAO;
+
+    private String email = "email@email.com";
+    private String password = "password";
 
     @Mock
     HttpServletRequest req = mock(HttpServletRequest.class);
     HttpSession session = mock(HttpSession.class);
 
-    @BeforeClass
-    public static void createTestUser() throws DBException {
-        userDAO = new UserDAOImpl();
+    @Before
+    public void createTestUser() throws DBException {
         User user = UserCreator.createUser("firstName", "lastName", email, password);
         userDAO.create(user);
     }
 
-    @AfterClass
-    public static void tearDown() throws DBException {
+    @After
+    public void tearDown() throws DBException {
         userDAO.delete(userDAO.getIdByEmail(email));
-    }
-
-    @Before
-    public void init() throws DBException {
-        loginController = new LoginController();
     }
 
     @Test
