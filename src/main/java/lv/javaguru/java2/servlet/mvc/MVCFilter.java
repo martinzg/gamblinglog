@@ -40,14 +40,14 @@ public class MVCFilter implements Filter {
 
         urlToControllerMap = new HashMap<>();
         urlToControllerMap.put("/hello", getBean(HelloWorldController.class));
-        urlToControllerMap.put("/login", new LoginController());
-        urlToControllerMap.put("/userprofile", new UserProfileController());
-        urlToControllerMap.put("/registration", new UserRegistrationController());
-        urlToControllerMap.put("/gamblingsites", new GamblingSitesController());
+        urlToControllerMap.put("/login", getBean(LoginController.class));
+        urlToControllerMap.put("/userprofile", getBean(UserProfileController.class));
+        urlToControllerMap.put("/registration", getBean(UserRegistrationController.class));
+        urlToControllerMap.put("/gamblingsites", getBean(GamblingSitesController.class));
 		urlToControllerMap.put("/gambling-site-add", new GamblingSiteAddController());
         urlToControllerMap.put("/stake-add", new StakeAddController());
-        urlToControllerMap.put("/forgotpassword", new ForgotPasswordController());
-        urlToControllerMap.put("/changepassword", new ChangePasswordController());
+        urlToControllerMap.put("/forgotpassword", getBean(ForgotPasswordController.class));
+        urlToControllerMap.put("/changepassword", getBean(ChangePasswordController.class));
         urlToControllerMap.put("/addlandbasedgamblingevent", getBean(AddOfflineGamingEventController.class));
     }
 
