@@ -4,11 +4,17 @@ import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.database.jdbc.UserDAOImpl;
 import lv.javaguru.java2.domain.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@Component
 public class ChangePasswordController implements MVCController{
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public MVCModel processRequestGet(HttpServletRequest req) {
@@ -19,7 +25,6 @@ public class ChangePasswordController implements MVCController{
     public MVCModel processRequestPost(HttpServletRequest req) {
 
         HttpSession session = req.getSession();
-        UserDAO userDAO = new UserDAOImpl();
 
         try {
             if (session.getId().equals(req.getParameter("link"))){
