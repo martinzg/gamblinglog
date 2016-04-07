@@ -8,14 +8,15 @@ import java.util.List;
  * Created by tyoma17 on 29.03.2016.
  */
 public interface StakeDAO {
-    void create(Stake stake) throws DBException;
 
-    Stake getByID(Long id) throws DBException;
+        void create(Stake stake) throws DBException;
 
-    void delete(Long id) throws DBException;
+        Stake getByID(Long id) throws DBException;
 
-    void update(Stake stake) throws DBException;
+        void delete(Long id) throws DBException;
 
-    List<Stake> getAllStakes() throws DBException;
+        void update(Stake stake) throws DBException;
+
+        List<Stake> getAllStakes(Long id) throws DBException;
 
 }

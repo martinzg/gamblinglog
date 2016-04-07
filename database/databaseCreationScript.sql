@@ -38,7 +38,9 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`stakes` (
   `Coefficient` FLOAT(8, 3)                   NOT NULL,
   `Result`      VARCHAR(50)                   NOT NULL,
   `Comment`     TEXT                          NULL,
-  PRIMARY KEY (`StakeID`)
+  `UserID` INT(11) NOT NULL,
+  PRIMARY KEY (`StakeID`),
+  CONSTRAINT UserStakesFK FOREIGN KEY (`UserID`) REFERENCES users(`UserID`)
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 1002;
