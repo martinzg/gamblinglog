@@ -6,10 +6,13 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.GamblingSiteDAO;
 import lv.javaguru.java2.domain.GamblingSite;
 
+@Component
 public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 
 	@Override
