@@ -1,5 +1,9 @@
 package lv.javaguru.java2.servlet.mvc;
 
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,10 +23,23 @@ public class MVCFilter implements Filter {
 
     private Map<String, MVCController> urlToControllerMap;
 
+    private ApplicationContext springContext;
+
+    private MVCController getBean (Class clazz) {
+        return (MVCController) springContext.getBean(clazz);
+    }
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        try {
+            springContext = new AnnotationConfigApplicationContext(SpringAppConfig.class);
+        }
+        catch (BeansException e) {
+            System.out.println("Error! Spring context failure!");
+        }
+
         urlToControllerMap = new HashMap<>();
-        urlToControllerMap.put("/hello", new HelloWorldController());
+        urlToControllerMap.put("/hello", getBean(HelloWorldController.class));
         urlToControllerMap.put("/login", new LoginController());
         urlToControllerMap.put("/userprofile", new UserProfileController());
         urlToControllerMap.put("/registration", new UserRegistrationController());
