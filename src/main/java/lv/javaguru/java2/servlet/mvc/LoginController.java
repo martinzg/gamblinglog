@@ -2,7 +2,7 @@ package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
-import lv.javaguru.java2.database.jdbc.UserDAOImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +10,9 @@ import javax.servlet.http.HttpSession;
 
 @Component
 public class LoginController implements MVCController{
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public MVCModel processRequestGet(HttpServletRequest req) {
@@ -24,7 +27,6 @@ public class LoginController implements MVCController{
         String username = req.getParameter("email");
         String password = req.getParameter("password");
 
-        UserDAO userDAO = new UserDAOImpl();
         Long userId;
 
         try {
