@@ -2,12 +2,17 @@ package lv.javaguru.java2.servlet.mvc;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import lv.javaguru.java2.database.GamblingSiteDAO;
 import lv.javaguru.java2.database.jdbc.GamblingSiteDAOImpl;
 import lv.javaguru.java2.domain.GamblingSite;
 
+@Component
 public class GamblingSiteAddController implements MVCController {
 
+	@Autowired
 	private final GamblingSiteDAO siteDAO;
 
 	public GamblingSiteAddController() {
