@@ -4,12 +4,17 @@ import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.jdbc.UserDAOImpl;
 import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
+import lv.javaguru.java2.servlet.mvc.SpringAppConfig;
 import lv.javaguru.java2.servlet.mvc.UserRegistrationController;
-import org.junit.AfterClass;
+import org.junit.After;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
 import javax.servlet.http.HttpServletRequest;
 
 import static org.junit.Assert.assertEquals;
@@ -17,35 +22,35 @@ import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringAppConfig.class)
+
 public class UserRegistrationControllerTest {
 
+    @Autowired
     private UserRegistrationController userRegistrationController;
-    private static UserDAOImpl userDAO;
-    private static String firstName = "firstName";
-    private static String lastName = "lastName";
-    private static String email = "email@email.com";
-    private static String emailSuccess = "email@emailSuccess.com";
-    private static String password = "password";
+
+    @Autowired
+    private UserDAOImpl userDAO;
+
+    private String firstName = "firstName";
+    private String lastName = "lastName";
+    private String email = "email@email.com";
+    private String password = "password";
+    String emailSuccess = "email@emailSuccess.com";
 
     @Mock
     HttpServletRequest req = mock(HttpServletRequest.class);
 
-    @BeforeClass
-    public static void createTestUser() throws DBException {
-        userDAO = new UserDAOImpl();
+    @Before
+    public void createTestUser() throws DBException {
         User user = UserCreator.createUser(firstName, lastName, email, password);
         userDAO.create(user);
     }
 
-    @AfterClass
-    public static void tearDown() throws DBException {
+    @After
+    public void tearDown() throws DBException {
         userDAO.delete(userDAO.getIdByEmail(email));
-        userDAO.delete(userDAO.getIdByEmail(emailSuccess));
-    }
-
-    @Before
-    public void init() throws DBException {
-        userRegistrationController = new UserRegistrationController();
     }
 
     @Test
@@ -60,6 +65,8 @@ public class UserRegistrationControllerTest {
         assertEquals("/Redirect.jsp", mvcModel.getJspName());
         assertEquals("/java2/login", mvcModel.getData());
         assertEquals("User registered successfully!", mvcModel.getMessage());
+
+        userDAO.delete(userDAO.getIdByEmail(emailSuccess));
     }
 
     @Test
