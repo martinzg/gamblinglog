@@ -48,7 +48,7 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/stake-add", new StakeAddController());
         urlToControllerMap.put("/forgotpassword", new ForgotPasswordController());
         urlToControllerMap.put("/changepassword", new ChangePasswordController());
-        urlToControllerMap.put("/addlandbasedgamblingevent", new AddOfflineGamingEventController());
+        urlToControllerMap.put("/addlandbasedgamblingevent", getBean(AddOfflineGamingEventController.class));
     }
 
     @Override
