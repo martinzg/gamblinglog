@@ -15,6 +15,19 @@ public class Stake {
     private double coefficient;
     private String result;
     private String comment;
+    private Long userId;
+
+    public long getStakeID() {
+        return stakeID;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
     public long getID() {
         return stakeID;
@@ -24,8 +37,8 @@ public class Stake {
         this.stakeID = stakeID;
     }
 
-    public java.sql.Date getDate() {
-        return new java.sql.Date(date.getTime());
+    public Date getDate() {
+        return date;
     }
 
     public void setDate(Date date) {

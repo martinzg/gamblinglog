@@ -24,8 +24,9 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
 
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO STAKES VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
-            preparedStatement.setDate(1, stake.getDate());
+            PreparedStatement preparedStatement = connection.prepareStatement(
+                    "INSERT INTO STAKES VALUES (DEFAULT, ?, ?, ?, ?, ?, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setDate(1, new java.sql.Date(stake.getDate().getTime()));
             preparedStatement.setString(2, stake.getUrl());
             preparedStatement.setString(3, stake.getEvent());
             preparedStatement.setString(4, stake.getBetType());
@@ -33,8 +34,9 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
             preparedStatement.setDouble(6, stake.getCoefficient());
             preparedStatement.setString(7, stake.getResult());
             preparedStatement.setString(8, stake.getComment());
+            preparedStatement.setLong(9, stake.getUserId());
 
-            preparedStatement.executeLargeUpdate();
+            preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next()) {
                 stake.setStakeID(rs.getLong(1));
@@ -81,30 +83,30 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
     }
 
     @Override
-    public List<Stake> getAllStakes() throws DBException {
-        List<Stake> stakes = new ArrayList<Stake>();
+    public List<Stake> getAllStakes(Long id) throws DBException {
+        List<Stake> stakes = new ArrayList<>();
         Connection connection = null;
 
         try {
             connection = getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM STAKES");
-
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM STAKES WHERE StakeID = ?");
+            preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Stake stake = new Stake();
-                stake.setStakeID(resultSet.getLong("Stake ID"));
+                stake.setStakeID(resultSet.getLong("StakeID"));
                 stake.setDate(resultSet.getDate("Date"));
-                stake.setUrl(resultSet.getString("Url"));
+                stake.setUrl(resultSet.getString("URL"));
                 stake.setEvent(resultSet.getString("Event"));
-                stake.setBetType(resultSet.getString("Bet Type"));
-                stake.setBetAmount(resultSet.getDouble("Bet Amount"));
+                stake.setBetType(resultSet.getString("BetType"));
+                stake.setBetAmount(resultSet.getDouble("BetAmount"));
                 stake.setCoefficient(resultSet.getDouble("Coefficient"));
                 stake.setResult(resultSet.getString("Result"));
                 stake.setComment(resultSet.getString("Comment"));
                 stakes.add(stake);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting customer list StakeDAOImpl.getAllStakes()");
+            System.out.println("Exception while getting stake list StakeDAOImpl.getAllStakes()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -141,8 +143,8 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
         try {
             connection = getConnection();
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("update STAKES set Date = ?, Url = ?, Event = ?, BetType = ?, BetAmount = ?, Coefficient = ?, Result = ?, Comment = ?, where UserID = ?");
-            preparedStatement.setDate(1, stake.getDate());
+                    .prepareStatement("update STAKES set Date = ?, Url = ?, Event = ?, BetType = ?, BetAmount = ?, Coefficient = ?, Result = ?, Comment = ?, UserID = ? " +" where StakeID = ?");
+            preparedStatement.setDate(1, new java.sql.Date(stake.getDate().getTime()));
             preparedStatement.setString(2, stake.getUrl());
             preparedStatement.setString(3, stake.getEvent());
             preparedStatement.setString(4, stake.getBetType());
@@ -160,3 +162,4 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
         }
     }
 }
+
