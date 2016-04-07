@@ -2,9 +2,11 @@ package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.jdbc.LandBasedCasinoDAOImpl;
 import lv.javaguru.java2.resources.OfflineGamblingEventData;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 
+@Component
 public class AddOfflineGamingEventController implements MVCController {
 
     @Override
