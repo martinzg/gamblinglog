@@ -1,6 +1,8 @@
 package lv.javaguru.java2.database.jdbc;
 
 import lv.javaguru.java2.database.DBException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -12,6 +14,8 @@ import java.util.Properties;
  * Created by Viktor on 01/07/2014.
  */
 public class DAOImpl {
+
+    private final Logger logger = LoggerFactory.getLogger(DAOImpl.class);
 
     private static final String DB_CONFIG_FILE = "database.properties";
 
@@ -29,7 +33,7 @@ public class DAOImpl {
         try {
             Class.forName("com.mysql.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.out.println("Exciption while registering JDBC driver!");
+            logger.error("Exciption while registering JDBC driver!");
             e.printStackTrace();
         }
     }
@@ -43,7 +47,7 @@ public class DAOImpl {
             userName = properties.getProperty("userName");
             password = properties.getProperty("password");
         } catch (IOException e){
-            System.out.println("Exciption while reading JDBC configuration from file = " + DB_CONFIG_FILE);
+            logger.error("Exciption while reading JDBC configuration from file = " + DB_CONFIG_FILE);
             e.printStackTrace();
         }
     }
@@ -52,7 +56,7 @@ public class DAOImpl {
         try{
             return DriverManager.getConnection(dbUrl, userName, password);
         } catch (SQLException e) {
-            System.out.println("Exciption while getting connection to database");
+            logger.error("Exciption while getting connection to database");
             e.printStackTrace();
             throw new DBException(e);
         }
@@ -64,7 +68,7 @@ public class DAOImpl {
                 connection.close();
             }
         } catch (SQLException e) {
-            System.out.println("Exciption while closing connection to database");
+            logger.error("Exciption while closing connection to database");
             e.printStackTrace();
             throw new DBException(e);
         }

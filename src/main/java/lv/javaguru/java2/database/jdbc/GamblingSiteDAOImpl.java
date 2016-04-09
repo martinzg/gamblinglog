@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import lv.javaguru.java2.database.DBException;
@@ -14,6 +16,8 @@ import lv.javaguru.java2.domain.GamblingSite;
 
 @Component
 public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
+
+	Logger logger = LoggerFactory.getLogger(GamblingSiteDAOImpl.class);
 
 	@Override
 	public void create(GamblingSite site) throws DBException {
@@ -38,7 +42,7 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 				site.setId(rs.getLong(1));
 			}
 		} catch (Throwable e) {
-			System.out.println("Exception while execute SiteDAOImpl.create()");
+			logger.error("Exception while execute SiteDAOImpl.create()");
 			e.printStackTrace();
 			throw new DBException(e);
 		} finally {
@@ -67,7 +71,7 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 			}
 			return site;
 		} catch (Throwable e) {
-			System.out.println("Exception while execute GamblingSiteDAOImpl.getById()");
+			logger.error("Exception while execute GamblingSiteDAOImpl.getById()");
 			e.printStackTrace();
 			throw new DBException(e);
 		} finally {
@@ -85,7 +89,7 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 			preparedStatement.setLong(1, id);
 			preparedStatement.executeUpdate();
 		} catch (Throwable e) {
-			System.out.println("Exception while execute GamblingSiteDAOImpl.delete()");
+			logger.error("Exception while execute GamblingSiteDAOImpl.delete()");
 			e.printStackTrace();
 			throw new DBException(e);
 		} finally {
@@ -112,7 +116,7 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 			preparedStatement.setLong(5, site.getUserId());
 			preparedStatement.executeUpdate();
 		} catch (Throwable e) {
-			System.out.println("Exception while execute GamblingSiteDAOImpl.update()");
+			logger.error("Exception while execute GamblingSiteDAOImpl.update()");
 			e.printStackTrace();
 			throw new DBException(e);
 		} finally {
@@ -139,7 +143,7 @@ public class GamblingSiteDAOImpl extends DAOImpl implements GamblingSiteDAO {
 				sites.add(site);
 			}
 		} catch (Throwable e) {
-			System.out.println("Exception while getting customer list UserDAOImpl.getList()");
+			logger.error("Exception while getting customer list UserDAOImpl.getList()");
 			e.printStackTrace();
 			throw new DBException(e);
 		} finally {

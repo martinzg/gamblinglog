@@ -2,6 +2,8 @@ package lv.javaguru.java2.database.jdbc;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.domain.LandBasedCasino;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
@@ -13,6 +15,9 @@ import java.util.List;
 
 @Component
 public class LandBasedCasinoDAOImpl extends DAOImpl {
+
+    Logger logger = LoggerFactory.getLogger(LandBasedCasinoDAOImpl.class);
+
     public List<LandBasedCasino> getAll() {
         Connection connection;
         List<LandBasedCasino> landBasedCasinos = new ArrayList<>();
@@ -30,11 +35,11 @@ public class LandBasedCasinoDAOImpl extends DAOImpl {
             }
         }
         catch (DBException ex) {
-            System.out.println("DB exception");
+            logger.error("DB exception");
             ex.printStackTrace();
         }
         catch (SQLException ex2) {
-            System.out.println("SQL exception");
+            logger.error("SQL exception");
             ex2.printStackTrace();
         }
         return landBasedCasinos;

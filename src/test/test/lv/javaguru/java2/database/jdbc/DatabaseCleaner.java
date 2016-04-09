@@ -10,6 +10,9 @@ import java.util.List;
 
 public class DatabaseCleaner extends DAOImpl {
 
+    private Logger logger = LoggerFactory.getLogger(DatabaseCleaner.class);
+
+
     private List<String> getTableNames() {
         List<String> tableNames = new ArrayList<>();
         tableNames.add("USERS");
@@ -24,7 +27,7 @@ public class DatabaseCleaner extends DAOImpl {
                 PreparedStatement preparedStatement = connection.prepareStatement("delete from " + tableName);
                 preparedStatement.executeUpdate();
             } catch (Throwable e) {
-                System.out.println("Exception while execute cleanDatabase() for table " + tableName);
+                logger.error("Exception while execute cleanDatabase() for table " + tableName);
                 e.printStackTrace();
                 throw new DBException(e);
             } finally {

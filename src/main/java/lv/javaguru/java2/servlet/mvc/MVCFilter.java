@@ -1,5 +1,6 @@
 package lv.javaguru.java2.servlet.mvc;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -7,6 +8,8 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.slf4j.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -20,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class MVCFilter implements Filter {
+
+    private Logger logger = LoggerFactory.getLogger(MVCFilter.class);
 
     private Map<String, MVCController> urlToControllerMap;
 
@@ -35,7 +40,7 @@ public class MVCFilter implements Filter {
             springContext = new AnnotationConfigApplicationContext(SpringAppConfig.class);
         }
         catch (BeansException e) {
-            System.out.println("Error! Spring context failure!");
+            logger.error("Error! Spring context failure!");
         }
 
         urlToControllerMap = new HashMap<>();

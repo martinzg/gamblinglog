@@ -3,6 +3,9 @@ package lv.javaguru.java2.database.jdbc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.StakeDAO;
 import lv.javaguru.java2.domain.Stake;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +16,8 @@ import java.util.List;
  * Created by tyoma17 on 30.03.2016.
  */
 public class StakeDAOImpl extends DAOImpl implements StakeDAO {
+
+    Logger logger = LoggerFactory.getLogger(StakeDAOImpl.class);
 
     @Override
     public void create(Stake stake) throws DBException {
@@ -42,7 +47,7 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
                 stake.setStakeID(rs.getLong(1));
             }
         } catch (Throwable e) {
-            System.out.println("Exception while execute StakeDAOImpl.create()");
+            logger.error("Exception while execute StakeDAOImpl.create()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -74,7 +79,7 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
             }
             return stake;
         } catch (Throwable e) {
-            System.out.println("Exception while execute StakeDAOImpl.getById()");
+            logger.error("Exception while execute StakeDAOImpl.getById()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -106,7 +111,7 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
                 stakes.add(stake);
             }
         } catch (Throwable e) {
-            System.out.println("Exception while getting stake list StakeDAOImpl.getAllStakes()");
+            logger.error("Exception while getting stake list StakeDAOImpl.getAllStakes()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -125,7 +130,7 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
             preparedStatement.setLong(1, id);
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute StakeDAOImpl.delete()");
+            logger.error("Exception while execute StakeDAOImpl.delete()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
@@ -154,7 +159,7 @@ public class StakeDAOImpl extends DAOImpl implements StakeDAO {
             preparedStatement.setString(8, stake.getComment());
             preparedStatement.executeUpdate();
         } catch (Throwable e) {
-            System.out.println("Exception while execute StakeDAOImpl.update()");
+            logger.error("Exception while execute StakeDAOImpl.update()");
             e.printStackTrace();
             throw new DBException(e);
         } finally {
