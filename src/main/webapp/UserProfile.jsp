@@ -5,11 +5,8 @@
     <title>Profile</title>
 </head>
 <body>
-
+	<%@include file="Menu.jsp" %>
     <h1>User Profile:</h1>
-    <form method="post">
-        <input type="submit" name="show sites" value="Gambling Sites">
-    </form>
 
 </body>
 </html>

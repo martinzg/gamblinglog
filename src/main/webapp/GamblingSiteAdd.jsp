@@ -5,7 +5,7 @@
     <title>GamblingSiteAdd</title>
 </head>
 <body>
-
+    <%@include file="Menu.jsp" %>
     <h1>Add gambling site:</h1>
     <form method="post">
         Site name:<br>

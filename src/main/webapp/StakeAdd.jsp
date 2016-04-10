@@ -12,6 +12,7 @@
     <title>StakeAdd</title>
 </head>
 <body>
+	<%@include file="Menu.jsp" %>
   <h1> Add stake:</h1>
   <form method="post">
     Date:<br>

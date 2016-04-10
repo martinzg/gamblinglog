@@ -8,7 +8,7 @@
     <title>Add land based casino gambling event!</title>
 </head>
 <body>
-
+	<%@include file="Menu.jsp" %>
     <h1>Add event:</h1>
     <form method="post">
         Date:<br>

@@ -5,12 +5,8 @@
     <title>Gambling Sites</title>
 </head>
 <body>
-
+	<%@include file="Menu.jsp" %>
     <h1>Gambling Sites:</h1>
-    <form method="post">
-        <input type="submit" name="show sites" value="Gambling Sites">
-    </form>
-
     <table>
         <tr>
             <td>
