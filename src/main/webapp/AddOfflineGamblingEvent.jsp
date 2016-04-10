@@ -1,5 +1,6 @@
 <%@ page import="lv.javaguru.java2.domain.LandBasedCasino" %>
 <%@ page import="lv.javaguru.java2.resources.OfflineGamblingEventData" %>
+<%@ page import="lv.javaguru.java2.domain.GamblingType" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
@@ -19,14 +20,14 @@
             <%= "<option value=\"" + c.getId() + "\" >" + c.getName() + " </option>" %>
             <% } %>
         </select><br>
+        Gambling type:<br>
+            <% for (GamblingType c : data.getGamblingTypeList()) { %>
+            <%= "<input type=\"checkbox\" value=\"" + c.getId() + "\">" + c.getName() + " <br>"%>
+            <% } %>
         Comment:<br>
         <input type="text" maxlength="256" name="comment" title="comment"><br>
         <input type="submit" name="submit" value="Submit" title="Submit">
     </form>
-    <c:set var="message" scope="session" value='<%= request.getParameter("param") %>'/>
-    <c:if test="${message != null}">
-        <h4 style="color:red"><c:out value="${message}" /></h4>
-    </c:if>
 
 </body>
 </html>

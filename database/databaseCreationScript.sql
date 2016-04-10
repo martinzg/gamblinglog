@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`landBasedCasino` (
   ENGINE = InnoDB
   AUTO_INCREMENT = 1002;
 -- ------
--- Lets add some records for testing porpuses
+-- Lets add some records for testing purposes
 -- ------
 INSERT INTO `java2_test`.`landBasedCasino`
 VALUES (NULL, "Voodoo casino", "Cool casino in Riga");
@@ -115,6 +115,17 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`gamblingType` (
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 1002;
+-- ------
+-- Lets add some records for testing purposes
+-- ------
+INSERT INTO `java2_test`.`gamblingType`
+VALUES (NULL, "Blackjack");
+
+INSERT INTO `java2_test`.`gamblingType`
+VALUES (NULL, "Roulette");
+
+INSERT INTO `java2_test`.`gamblingType`
+VALUES (NULL, "Slots");
 
 -- -----------------------------------------------------
 -- Table for gambling types @ offline gambling events
