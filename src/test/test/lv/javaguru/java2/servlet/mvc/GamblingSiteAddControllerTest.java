@@ -8,27 +8,29 @@ import javax.servlet.http.HttpSession;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import lv.javaguru.java2.database.GamblingSiteDAO;
 import lv.javaguru.java2.servlet.mvc.GamblingSiteAddController;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = SpringAppConfigTest.class)
 public class GamblingSiteAddControllerTest {
 	
 	private HttpServletRequest req;
 	private HttpSession session;
-	private GamblingSiteDAO siteDao;
 
+	@Autowired
 	private GamblingSiteAddController siteAddController;
 
     @Before
     public void init(){
 		req = mock(HttpServletRequest.class);
 		session = mock(HttpSession.class);
-		siteDao = mock(GamblingSiteDAO.class);
-
-		siteAddController = new GamblingSiteAddController(siteDao);
     }
 
     @Test

@@ -1,15 +1,8 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.slf4j.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -22,6 +15,12 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 public class MVCFilter implements Filter {
 
     private Logger logger = LoggerFactory.getLogger(MVCFilter.class);
@@ -30,8 +29,8 @@ public class MVCFilter implements Filter {
 
     private ApplicationContext springContext;
 
-    private MVCController getBean (Class clazz) {
-        return (MVCController) springContext.getBean(clazz);
+	private MVCController getBean(Class<?> clazz) {
+		return (MVCController) springContext.getBean(clazz);
     }
 
     @Override
