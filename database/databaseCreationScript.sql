@@ -22,6 +22,39 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1002;
 
 -- -----------------------------------------------------
+-- Table `Java2_test`.`roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `java2_test`.`roles` ;
+
+CREATE TABLE IF NOT EXISTS `java2_test`.`roles` (
+  `RoleID`   INT(11)  NOT NULL AUTO_INCREMENT,
+  `RoleName` CHAR(32) NOT NULL,
+  PRIMARY KEY (`RoleID`)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1002;
+
+INSERT INTO `java2_test`.`roles` VALUES (default, 'GamblingLogRole');
+
+-- -----------------------------------------------------
+-- Table `Java2_test`.`user_roles`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `java2_test`.`user_roles` ;
+
+CREATE TABLE IF NOT EXISTS `java2_test`.`user_roles` (
+  `ID`        INT(11)  NOT NULL AUTO_INCREMENT,
+  `UserID`    INT(11)  NOT NULL,
+  `Email`     CHAR(32) NOT NULL,
+  `RoleID`    INT(11)  NOT NULL,
+  `RoleName`  CHAR(32) NOT NULL,
+  PRIMARY KEY (`ID`),
+  CONSTRAINT UserRolesFK1 FOREIGN KEY (`UserID`) REFERENCES users(`UserID`),
+  CONSTRAINT UserRolesFK2 FOREIGN KEY (`RoleID`) REFERENCES roles(`RoleID`)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1002;
+
+-- -----------------------------------------------------
 -- Table `Java2_test`.`stakes`
 -- -----------------------------------------------------
 
