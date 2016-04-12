@@ -6,13 +6,14 @@
 </head>
 <body>
 
+    <link rel="icon" href="data:;base64,=">
     <h1>User login:</h1>
-    <form method="post">
+    <form method="post" action="/j_security_check">
         Email:<br>
-        <input type="email" name="email" required>
+        <input type="email" name="j_username" required>
         <br>
         Password:<br>
-        <input type="password" name="password" required>
+        <input type="password" name="j_password" required>
         <br><br>
         <input type="submit" name="submit" value="Log In">
     </form>
@@ -22,8 +23,8 @@
     </c:if>
     <table>
         <tr>
-            <td><a href="/java2/registration">Register</a></td>
-            <td><a href="/java2/forgotpassword">Forgot Password?</a></td>
+            <td><a href="/registration">Register</a></td>
+            <td><a href="/forgotpassword">Forgot Password?</a></td>
         </tr>
     </table>
 

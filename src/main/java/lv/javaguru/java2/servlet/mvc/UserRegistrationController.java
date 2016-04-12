@@ -29,7 +29,7 @@ public class UserRegistrationController implements MVCController {
             if (userDAO.getIdByEmail(req.getParameter("email")) == null) {
                 if (req.getParameter("password").equals(req.getParameter("confirm password"))){
                     userDAO.create(user);
-                    return new MVCModel("/Redirect.jsp", "/java2/login", "User registered successfully!");
+                    return new MVCModel("/Redirect.jsp", "/login", "User registered successfully!");
                 }
                 else {
                     return new MVCModel("/UserRegistration.jsp", null, "'Password' and 'Confirm Password' do not match!");

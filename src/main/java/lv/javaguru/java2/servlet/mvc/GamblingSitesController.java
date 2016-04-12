@@ -35,7 +35,7 @@ public class GamblingSitesController implements MVCController {
     @Override
     public MVCModel processRequestPost(HttpServletRequest req) {
         if (req.getParameter("add site") != null) {
-            return new MVCModel("/Redirect.jsp", "/java2/gambling-site-add", null);
+            return new MVCModel("/Redirect.jsp", "/gambling-site-add", null);
         }
         else {
             return new MVCModel("/GamblingSites.jsp", null, null);

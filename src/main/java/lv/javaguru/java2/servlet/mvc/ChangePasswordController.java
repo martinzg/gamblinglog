@@ -35,7 +35,7 @@ public class ChangePasswordController implements MVCController{
                     user.setPassword(req.getParameter("password"));
                     userDAO.update(user);
 
-                    return new MVCModel("/Redirect.jsp", "/java2/login", "Your password has been successfully changed!");
+                    return new MVCModel("/Redirect.jsp", "/login", "Your password has been successfully changed!");
                 }
                 else {
                     return new MVCModel("/ChangePassword.jsp", null, "'New Password' and 'Confirm New Password' do not match!");

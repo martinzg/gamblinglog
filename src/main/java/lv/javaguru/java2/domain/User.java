@@ -49,4 +49,26 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public boolean equals(Object obj){
+        if (!(obj instanceof User)){
+            return false;
+        }
+        User aUser = (User) obj;
+        return (this.userId==(aUser.getUserId()))&&
+                        (this.firstName.equals(aUser.getFirstName()))&&
+                        (this.lastName.equals(aUser.getLastName()))&&
+                        (this.email.equals(aUser.getEmail())&&
+                        (this.password.equals(aUser.getPassword())));
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (userId ^ (userId >>> 32));
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + password.hashCode();
+        return result;
+    }
 }

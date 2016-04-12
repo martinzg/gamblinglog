@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.SecureRandom;
 
 @Component
 public class ForgotPasswordController implements MVCController{
@@ -33,7 +32,7 @@ public class ForgotPasswordController implements MVCController{
             }
             else {
                 session.setAttribute("userId", userId);
-                sendEmail(req.getParameter("email"), "http://localhost:8080/java2/changepassword?link=" + session.getId());
+                sendEmail(req.getParameter("email"), "http://localhost:8080/changepassword?link=" + session.getId());
                 return new MVCModel("/ForgotPassword.jsp", null, "Password reset link has been sent to your email!");
             }
         }
@@ -41,16 +40,6 @@ public class ForgotPasswordController implements MVCController{
             throw new RuntimeException(e);
         }
 
-    }
-
-    private String generatePassword(){
-        String chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        SecureRandom random = new SecureRandom();
-        StringBuilder password = new StringBuilder();
-        for (int i=0; i<20; i++){
-            password.append(chars.charAt(random.nextInt(chars.length())));
-        }
-        return password.toString();
     }
 
     private void sendEmail(String email, String link){

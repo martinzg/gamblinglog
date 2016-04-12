@@ -40,6 +40,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
             if (rs.next()){
                 user.setUserId(rs.getLong(1));
             }
+            createUserRole(user, connection); //creates record in 'user_roles' table
         } catch (Throwable e) {
             logger.error("Exception while execute UserDAOImpl.create()");
             e.printStackTrace();
@@ -134,6 +135,7 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
         Connection connection = null;
         try {
             connection = getConnection();
+            deleteUserRole(id, connection); //deletes record in 'user_roles' table first
             PreparedStatement preparedStatement = connection
                     .prepareStatement("delete from USERS where UserID = ?");
             preparedStatement.setLong(1, id);
@@ -170,6 +172,35 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
             throw new DBException(e);
         } finally {
             closeConnection(connection);
+        }
+    }
+
+    private void createUserRole (User user, Connection connection) throws DBException {
+        try {
+            PreparedStatement preparedStatement =
+                    connection.prepareStatement("insert into USER_ROLES values (default, ?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, "" + user.getUserId());
+            preparedStatement.setString(2, user.getEmail());
+            preparedStatement.setString(3, "1002");
+            preparedStatement.setString(4, "GamblingLogRole");
+            preparedStatement.executeUpdate();
+        } catch (Throwable e) {
+            logger.error("Exception while execute UserDAOImpl.create()");
+            e.printStackTrace();
+            throw new DBException(e);
+        }
+    }
+
+    private void deleteUserRole(Long id, Connection connection) throws DBException {
+        try {
+            PreparedStatement preparedStatement = connection
+                    .prepareStatement("delete from USER_ROLES where UserID = ?");
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+        } catch (Throwable e) {
+            logger.error("Exception while execute UserDAOImpl.delete()");
+            e.printStackTrace();
+            throw new DBException(e);
         }
     }
 

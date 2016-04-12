@@ -8,5 +8,8 @@
 	<%@include file="Menu.jsp" %>
     <h1>User Profile:</h1>
 
+    <c:set var="id" scope="session" value='<%= request.getAttribute("data") %>'/>
+    <h4 style="color:red"><c:out value="${id}" /></h4>
+
 </body>
 </html>
