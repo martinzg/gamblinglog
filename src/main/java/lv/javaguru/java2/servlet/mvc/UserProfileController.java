@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 public class UserProfileController implements MVCController {
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Override
     public MVCModel processRequestGet(HttpServletRequest req) {

@@ -2,6 +2,8 @@ package lv.javaguru.java2.servlet.mvc;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lv.javaguru.java2.database.DBException;
+import lv.javaguru.java2.database.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -10,6 +12,9 @@ import lv.javaguru.java2.domain.GamblingSite;
 
 @Component
 public class GamblingSiteAddController implements MVCController {
+
+	@Autowired
+	private UserDAO userDAO;
 
 	@Autowired
 	private GamblingSiteDAO siteDAO;
@@ -37,10 +42,10 @@ public class GamblingSiteAddController implements MVCController {
 
 	}
 
-	private void getGamblingSiteAddData(GamblingSite site, HttpServletRequest request) {
+	private void getGamblingSiteAddData(GamblingSite site, HttpServletRequest request) throws DBException {
 		site.setName(request.getParameter("siteName"));
 		site.setURL(request.getParameter("siteURL"));
 		site.setDescription(request.getParameter("siteDescription"));
-		site.setUserId(Long.parseLong(request.getSession().getAttribute("userId").toString()));
+		site.setUserId(Long.parseLong(userDAO.getIdByEmail(request.getUserPrincipal().getName()).toString()));
 	}
 }

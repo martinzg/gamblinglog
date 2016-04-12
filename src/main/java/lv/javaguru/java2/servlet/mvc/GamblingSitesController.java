@@ -15,7 +15,7 @@ import java.util.List;
 public class GamblingSitesController implements MVCController {
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
     private GamblingSiteDAO gamblingSiteDAO;
