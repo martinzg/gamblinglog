@@ -25,11 +25,11 @@
         <br><br>
         <input type="submit" name="submit" value="Submit">
     </form>
-    <a href="/login">Back to Login</a>
     <c:set var="message" scope="session" value='<%= request.getAttribute("message") %>'/>
     <c:if test="${message != null}">
         <h4 style="color:red"><c:out value="${message}" /></h4>
     </c:if>
+    <a href="/login">Back to Login</a>
 
 </body>
 </html>

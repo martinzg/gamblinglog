@@ -27,7 +27,7 @@ public class GamblingSiteAddController implements MVCController {
 	@Override
 	public MVCModel processRequestPost(HttpServletRequest request) {
 		if (request.getParameter("back") != null) {
-			return new MVCModel("/Redirect.jsp", "/java2/gamblingsites", null);
+			return new MVCModel("/Redirect.jsp", "/gamblingsites", null);
 		}
 
 		try {
@@ -46,6 +46,6 @@ public class GamblingSiteAddController implements MVCController {
 		site.setName(request.getParameter("siteName"));
 		site.setURL(request.getParameter("siteURL"));
 		site.setDescription(request.getParameter("siteDescription"));
-		site.setUserId(Long.parseLong(userDAO.getIdByEmail(request.getUserPrincipal().getName()).toString()));
+		site.setUserId(userDAO.getIdByEmail(request.getUserPrincipal().getName()));
 	}
 }

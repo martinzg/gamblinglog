@@ -46,7 +46,7 @@
         <realm-name>JDBCRealm</realm-name>
         <form-login-config>
             <form-login-page>/UserLogin.jsp</form-login-page>
-            <form-error-page>/UserLogin.jsp</form-error-page>
+            <form-error-page>/UserLoginError.jsp</form-error-page>
         </form-login-config>
     </login-config>
 

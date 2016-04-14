@@ -23,7 +23,7 @@ public class GamblingSitesController implements MVCController {
     @Override
     public MVCModel processRequestGet(HttpServletRequest req) {
         try {
-            Long id = Long.parseLong(userDAO.getIdByEmail(req.getUserPrincipal().getName()).toString());
+            Long id = userDAO.getIdByEmail(req.getUserPrincipal().getName());
             List<GamblingSite> gamblingSiteList = gamblingSiteDAO.getAllSitesByUserId(id);
             return new MVCModel("/GamblingSites.jsp", gamblingSiteList, null);
         }

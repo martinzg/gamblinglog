@@ -17,7 +17,7 @@ public class UserProfileController implements MVCController {
     public MVCModel processRequestGet(HttpServletRequest req) {
         Long id = null;
         try {
-            id = Long.parseLong(userDAO.getIdByEmail(req.getUserPrincipal().getName()).toString());
+            id = userDAO.getIdByEmail(req.getUserPrincipal().getName());
         } catch (DBException e) {
             e.printStackTrace();
         }
