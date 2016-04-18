@@ -64,7 +64,6 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`stakes` (
   `StakeID`    INT(11)                       NOT NULL AUTO_INCREMENT,
   `Date`        DATETIME                      NOT NULL,
   `URL`         VARCHAR(50)                   NOT NULL,
-  `Sports`      VARCHAR(50)                   NOT NULL,
   `Event`       VARCHAR(50)                   NOT NULL,
   `BetType`    VARCHAR(50)                   NOT NULL,
   `BetAmount`  FLOAT(10, 2)                  NOT NULL,
