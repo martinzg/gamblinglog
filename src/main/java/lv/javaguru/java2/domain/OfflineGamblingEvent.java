@@ -1,8 +1,24 @@
 package lv.javaguru.java2.domain;
 
 import java.util.Date;
+import java.util.List;
 
 public class OfflineGamblingEvent {
+
+    private Long userId;
+    private Date date;
+    private String comment;
+    private Long placeId;
+
+    public List<Long> getGameId() {
+        return gameId;
+    }
+
+    public void setGameId(List<Long> gameId) {
+        this.gameId = gameId;
+    }
+
+    private List<Long> gameId;
 
     public Long getUserId() {
         return userId;
@@ -36,10 +52,6 @@ public class OfflineGamblingEvent {
         this.placeId = placeId;
     }
 
-    private Long userId;
-    private Date date;
-    private String comment;
-    private Long placeId;
 
 
 }

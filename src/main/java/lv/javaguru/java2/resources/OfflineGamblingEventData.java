@@ -10,6 +10,16 @@ public class OfflineGamblingEventData {
     private List<LandBasedCasino> landBasedCasinoList;
     private List<GamblingType> gamblingTypeList;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    private String message;
+
     public List<GamblingType> getGamblingTypeList() {
         return gamblingTypeList;
     }
