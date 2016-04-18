@@ -2,6 +2,7 @@ package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.StakeDAO;
+import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.database.jdbc.StakeDAOImpl;
 import lv.javaguru.java2.domain.Stake;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import java.util.Date;
  */
 @Component
 public class StakeAddController implements MVCController {
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Autowired
     private StakeDAO stakeDAO;
@@ -38,7 +42,7 @@ public class StakeAddController implements MVCController {
             return new MVCModel("/StakeAdd.jsp", null, "Failure!");
         }
     }
-    private void getStakeAddData(Stake stake, HttpServletRequest request) {
+    private void getStakeAddData(Stake stake, HttpServletRequest request) throws DBException {
         String str = request.getParameter("date");
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
         Date date = null;
@@ -55,7 +59,7 @@ public class StakeAddController implements MVCController {
         stake.setCoefficient(Double.parseDouble(request.getParameter("coefficient")));
         stake.setResult(request.getParameter("result"));
         stake.setComment(request.getParameter("comment"));
-        stake.setUserId(Long.parseLong(request.getSession().getAttribute("userId").toString()));
+        stake.setUserId(Long.parseLong(userDAO.getIdByEmail(request.getUserPrincipal().getName()).toString()));
     }
 
 }

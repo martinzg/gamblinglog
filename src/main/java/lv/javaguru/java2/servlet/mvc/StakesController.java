@@ -17,7 +17,7 @@ import java.util.List;
 public class StakesController implements MVCController {
 
     @Autowired
-    UserDAO userDAO;
+    private UserDAO userDAO;
 
     @Autowired
     private StakeDAO stakeDAO;
