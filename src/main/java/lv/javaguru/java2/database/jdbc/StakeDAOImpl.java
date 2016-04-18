@@ -5,6 +5,7 @@ import lv.javaguru.java2.database.StakeDAO;
 import lv.javaguru.java2.domain.Stake;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,6 +16,7 @@ import java.util.List;
 /**
  * Created by tyoma17 on 30.03.2016.
  */
+@Component
 public class StakeDAOImpl extends DAOImpl implements StakeDAO {
 
     Logger logger = LoggerFactory.getLogger(StakeDAOImpl.class);
