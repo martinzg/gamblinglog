@@ -9,20 +9,24 @@
 </head>
 <body>
 	<%@include file="Menu.jsp" %>
+    <% OfflineGamblingEventData data = (OfflineGamblingEventData) request.getAttribute("data"); %>
+    <% if (data.getMessage() != null) { %>
+    <%= "<h1>" + data.getMessage() + "</h1>"%>
+    <% } %>
     <h1>Add event:</h1>
     <form method="post">
-        Date:<br>
+        Date (yyyy-mm-dd):<br>
         <input type="date" name="date" title="date" required><br>
         Casino<br>
-        <select title="Landbased casinos">
-            <% OfflineGamblingEventData data = (OfflineGamblingEventData) request.getAttribute("data"); %>
+        <select name="casino">
+
             <% for (LandBasedCasino c : data.getLandBasedCasinoList()) { %>
-            <%= "<option value=\"" + c.getId() + "\" >" + c.getName() + " </option>" %>
+            <%= "<option value=\"" + c.getId() + "\" name=\"" + c.getId() + "\">" + c.getName() + " </option>" %>
             <% } %>
         </select><br>
         Gambling type:<br>
             <% for (GamblingType c : data.getGamblingTypeList()) { %>
-            <%= "<input type=\"checkbox\" value=\"" + c.getId() + "\">" + c.getName() + " <br>"%>
+            <%= "<input type=\"checkbox\" value=\"" + c.getId() + "\" name=\"type" + c.getId() + "\">" + c.getName() + " <br>"%>
             <% } %>
         Comment:<br>
         <input type="text" maxlength="256" name="comment" title="comment"><br>
