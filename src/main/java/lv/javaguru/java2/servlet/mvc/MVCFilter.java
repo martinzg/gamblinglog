@@ -43,6 +43,7 @@ public class MVCFilter implements Filter {
 
         urlToControllerMap = new HashMap<>();
         urlToControllerMap.put("/hello", getBean(HelloWorldController.class));
+        urlToControllerMap.put("/", getBean(LoginController.class));
         urlToControllerMap.put("/login", getBean(LoginController.class));
         urlToControllerMap.put("/logout", getBean(LogoutController.class));
         urlToControllerMap.put("/userprofile", getBean(UserProfileController.class));
