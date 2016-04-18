@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.security.MessageDigest;
 
 @Component
 public class UserRegistrationController implements MVCController {
@@ -23,11 +25,11 @@ public class UserRegistrationController implements MVCController {
     public MVCModel processRequestPost(HttpServletRequest req) {
 
         User user = new User();
-        getRegistrationFormInput(user, req);
 
         try {
             if (userDAO.getIdByEmail(req.getParameter("email")) == null) {
                 if (req.getParameter("password").equals(req.getParameter("confirm password"))){
+                    getRegistrationFormInput(user, req);
                     userDAO.create(user);
                     return new MVCModel("/Redirect.jsp", "/login", "User registered successfully!");
                 }
@@ -49,7 +51,24 @@ public class UserRegistrationController implements MVCController {
         user.setFirstName(req.getParameter("firstname"));
         user.setLastName(req.getParameter("lastname"));
         user.setEmail(req.getParameter("email"));
-        user.setPassword(req.getParameter("password"));
+        user.setPassword(hashPassword(req));
+    }
+
+    private String hashPassword (HttpServletRequest req) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            byte[] passwordHashed = messageDigest.digest(req.getParameter("password").getBytes("UTF-8"));
+
+            StringBuffer sb = new StringBuffer();
+            for (int i = 0; i < passwordHashed.length; i++) {
+                sb.append(Integer.toHexString((passwordHashed[i] & 0xFF) | 0x100).substring(1, 3));
+            }
+            return sb.toString();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }
