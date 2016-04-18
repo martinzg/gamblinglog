@@ -4,6 +4,8 @@ import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.StakeDAO;
 import lv.javaguru.java2.database.jdbc.StakeDAOImpl;
 import lv.javaguru.java2.domain.Stake;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
@@ -13,7 +15,12 @@ import java.util.Date;
 /**
  * Created by tyoma17 on 07.04.2016.
  */
+@Component
 public class StakeAddController implements MVCController {
+
+    @Autowired
+    private StakeDAO stakeDAO;
+
     @Override
     public MVCModel processRequestGet(HttpServletRequest request) {
         return new MVCModel("/StakeAdd.jsp", null, null);
@@ -21,18 +28,16 @@ public class StakeAddController implements MVCController {
 
     @Override
     public MVCModel processRequestPost(HttpServletRequest request) {
-        Stake stake = new Stake();
-        StakeDAO stakeDAO = new StakeDAOImpl();
-        getStakeAddData(stake, request);
         try {
+            Stake stake = new Stake();
+            getStakeAddData(stake, request);
             stakeDAO.create(stake);
             return new MVCModel("/StakeAdd.jsp", null, "Success!");
-        } catch (DBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return new MVCModel("/Redirect.jsp", null, "Failure!");
+            return new MVCModel("/StakeAdd.jsp", null, "Failure!");
         }
     }
-
     private void getStakeAddData(Stake stake, HttpServletRequest request) {
         String str = request.getParameter("date");
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
