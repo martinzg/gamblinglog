@@ -2,12 +2,9 @@ package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.StakeDAO;
-import lv.javaguru.java2.database.jdbc.StakeDAOImpl;
 import lv.javaguru.java2.domain.Stake;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
