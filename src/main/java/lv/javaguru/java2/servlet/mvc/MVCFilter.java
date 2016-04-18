@@ -14,7 +14,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
@@ -50,7 +49,7 @@ public class MVCFilter implements Filter {
         urlToControllerMap.put("/registration", getBean(UserRegistrationController.class));
         urlToControllerMap.put("/gamblingsites", getBean(GamblingSitesController.class));
 		urlToControllerMap.put("/gambling-site-add", getBean(GamblingSiteAddController.class));
-        urlToControllerMap.put("/stake-add", new StakeAddController());
+        urlToControllerMap.put("/stake-add",getBean(StakeAddController.class));
         urlToControllerMap.put("/forgotpassword", getBean(ForgotPasswordController.class));
         urlToControllerMap.put("/changepassword", getBean(ChangePasswordController.class));
         urlToControllerMap.put("/addlandbasedgamblingevent", getBean(AddOfflineGamingEventController.class));
