@@ -9,7 +9,7 @@ import java.util.Enumeration;
 @Component
 public class htmlSelectParser {
     public ArrayList<Long> parse(HttpServletRequest req, String key) {
-        ArrayList<Long> options = new ArrayList<Long>();
+        ArrayList<Long> options = new ArrayList<>();
         Enumeration<String> parameters = req.getParameterNames();
         while (parameters.hasMoreElements()) {
             String param = parameters.nextElement();
