@@ -12,11 +12,8 @@
     <title>Stakes</title>
 </head>
 <body>
+    <%@include file="Menu.jsp"%>
 <h1>Stakes:</h1>
-
-<form method="post">
-    <input type="submit" name="show stakes" value="Stakes">
-</form>
 
 <table>
     <tr>
@@ -50,7 +47,7 @@
         <c:forEach var="stake" varStatus="status" items="${stakeList}">
             <tr>
                 <td width="150px"><c:out value="${stake.date}"/></td>
-                <td width="150px"><c:out value="${stake.URL}"/></td>
+                <td width="150px"><c:out value="${stake.url}"/></td>
                 <td width="150px"><c:out value="${stake.event}"/></td>
                 <td width="150px"><c:out value="${stake.betType}"/></td>
                 <td width="150px"><c:out value="${stake.betAmount}"/></td>
