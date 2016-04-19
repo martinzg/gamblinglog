@@ -17,10 +17,13 @@
         <br><br>
         <input type="submit" name="submit" value="Log In">
     </form>
-    <c:set var="message" scope="session" value='<%= request.getAttribute("message") %>'/>
-    <c:if test="${message != null}">
+
+    <% if (session.getAttribute("message") != null) { %>
+        <c:set var="message" scope="session" value='<%= session.getAttribute("message").toString() %>'/>
         <h4 style="color:red"><c:out value="${message}" /></h4>
-    </c:if>
+    <%  session.removeAttribute("message");
+    } %>
+
     <table>
         <tr>
             <td><a href="/registration">Register</a></td>

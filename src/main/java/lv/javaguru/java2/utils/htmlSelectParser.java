@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 
 @Component
-public class HTMLSelectParser {
+public class htmlSelectParser {
     public ArrayList<Long> parse(HttpServletRequest req, String key) {
         ArrayList<Long> options = new ArrayList<Long>();
         Enumeration<String> parameters = req.getParameterNames();

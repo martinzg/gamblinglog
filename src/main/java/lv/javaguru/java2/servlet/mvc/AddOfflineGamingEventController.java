@@ -6,7 +6,7 @@ import lv.javaguru.java2.database.jdbc.GamblingEventDAOImpl;
 import lv.javaguru.java2.database.jdbc.LandBasedCasinoDAOImpl;
 import lv.javaguru.java2.domain.OfflineGamblingEvent;
 import lv.javaguru.java2.resources.OfflineGamblingEventData;
-import lv.javaguru.java2.utils.HTMLSelectParser;
+import lv.javaguru.java2.utils.htmlSelectParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class AddOfflineGamingEventController implements MVCController {
     @Autowired
     private UserDAO userDAO;
     @Autowired
-    private HTMLSelectParser selectParser;
+    private htmlSelectParser selectParser;
 
     private OfflineGamblingEventData addDefaultInformation(OfflineGamblingEventData data) {
         data.setLandBasedCasinoList(landBasedCasinoDAO.getAll());
