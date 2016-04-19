@@ -11,11 +11,11 @@ USE `Java2_test` ;
 DROP TABLE IF EXISTS `java2_test`.`users` ;
 
 CREATE TABLE IF NOT EXISTS `java2_test`.`users` (
-  `UserID`    INT(11)  NOT NULL AUTO_INCREMENT,
-  `FirstName` CHAR(32) NOT NULL,
-  `LastName`  CHAR(32) NOT NULL,
-  `Email`     CHAR(32) NOT NULL,
-  `Password`  CHAR(32) NOT NULL,
+  `UserID`    BIGINT(11)  NOT NULL AUTO_INCREMENT,
+  `FirstName` VARCHAR(32) NOT NULL,
+  `LastName`  VARCHAR(32) NOT NULL,
+  `Email`     VARCHAR(32) NOT NULL,
+  `Password`  VARCHAR(32) NOT NULL,
   PRIMARY KEY (`UserID`)
 )
 ENGINE = InnoDB
@@ -27,8 +27,8 @@ AUTO_INCREMENT = 1002;
 DROP TABLE IF EXISTS `java2_test`.`roles` ;
 
 CREATE TABLE IF NOT EXISTS `java2_test`.`roles` (
-  `RoleID`   INT(11)  NOT NULL AUTO_INCREMENT,
-  `RoleName` CHAR(32) NOT NULL,
+  `RoleID`   BIGINT(11)  NOT NULL AUTO_INCREMENT,
+  `RoleName` VARCHAR(32) NOT NULL,
   PRIMARY KEY (`RoleID`)
 )
   ENGINE = InnoDB
@@ -42,11 +42,11 @@ INSERT INTO `java2_test`.`roles` VALUES (default, 'GamblingLogRole');
 DROP TABLE IF EXISTS `java2_test`.`user_roles` ;
 
 CREATE TABLE IF NOT EXISTS `java2_test`.`user_roles` (
-  `ID`        INT(11)  NOT NULL AUTO_INCREMENT,
-  `UserID`    INT(11)  NOT NULL,
-  `Email`     CHAR(32) NOT NULL,
-  `RoleID`    INT(11)  NOT NULL,
-  `RoleName`  CHAR(32) NOT NULL,
+  `ID`        BIGINT(11)  NOT NULL AUTO_INCREMENT,
+  `UserID`    BIGINT(11)  NOT NULL,
+  `Email`     VARCHAR(32) NOT NULL,
+  `RoleID`    BIGINT(11)  NOT NULL,
+  `RoleName`  VARCHAR(32) NOT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT UserRolesFK1 FOREIGN KEY (`UserID`) REFERENCES users(`UserID`),
   CONSTRAINT UserRolesFK2 FOREIGN KEY (`RoleID`) REFERENCES roles(`RoleID`)
@@ -70,7 +70,7 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`stakes` (
   `Coefficient` FLOAT(8, 3)                   NOT NULL,
   `Result`      VARCHAR(50)                   NOT NULL,
   `Comment`     TEXT                          NULL,
-  `UserID` INT(11) NOT NULL,
+  `UserID` BIGINT(11) NOT NULL,
   PRIMARY KEY (`StakeID`),
   CONSTRAINT UserStakesFK FOREIGN KEY (`UserID`) REFERENCES users(`UserID`)
 )
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`sites` (
   `Name`        CHAR(50)  NOT NULL,
   `URL`         CHAR(255) NOT NULL,
   `Description` CHAR(255) NOT NULL,
-  `UserID`      INT(11)   NOT NULL,
+  `UserID`      BIGINT(11)   NOT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT UserSitesFK FOREIGN KEY (`UserID`) REFERENCES users (`UserID`)
 )
@@ -102,7 +102,7 @@ DROP TABLE IF EXISTS `java2_test`.`offlineGamingEvent` ;
 CREATE TABLE IF NOT EXISTS `java2_test`.`offlineGamingEvent` (
   `ID` INT(11) NOT NULL AUTO_INCREMENT,
   `Date` DATETIME NOT NULL,
-  `UserID` INT(11) NOT NULL,
+  `UserID` BIGINT(11) NOT NULL,
   `Place` INT(11) NOT NULL,
   `Comment` CHAR(255) NOT NULL,
   PRIMARY KEY (`ID`),
