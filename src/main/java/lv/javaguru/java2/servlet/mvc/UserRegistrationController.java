@@ -3,8 +3,10 @@ package lv.javaguru.java2.servlet.mvc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.User;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -42,7 +44,7 @@ public class UserRegistrationController implements MVCController {
                 return new MVCModel("/UserRegistration.jsp", null, "User with such email already exists!");
             }
         }
-        catch (DBException e) {
+        catch (JDBCException e) {
             throw new RuntimeException(e);
         }
 

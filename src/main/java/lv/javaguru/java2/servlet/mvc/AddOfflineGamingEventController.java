@@ -7,6 +7,7 @@ import lv.javaguru.java2.database.jdbc.LandBasedCasinoDAOImpl;
 import lv.javaguru.java2.domain.OfflineGamblingEvent;
 import lv.javaguru.java2.resources.OfflineGamblingEventData;
 import lv.javaguru.java2.utils.htmlSelectParser;
+import org.hibernate.JDBCException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class AddOfflineGamingEventController implements MVCController {
         event.setDate(valueOf(req.getParameter("date")));
         try {
             event.setUserId(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
-        } catch (DBException e) {
+        } catch (JDBCException e) {
             e.printStackTrace();
             logger.error("Error while getting user ID");
         }

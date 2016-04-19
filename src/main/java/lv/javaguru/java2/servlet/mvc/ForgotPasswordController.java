@@ -3,6 +3,7 @@ package lv.javaguru.java2.servlet.mvc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.SendEmailFromGmail;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -36,7 +37,7 @@ public class ForgotPasswordController implements MVCController{
                 return new MVCModel("/ForgotPassword.jsp", null, "Password reset link has been sent to your email!");
             }
         }
-        catch (DBException e) {
+        catch (JDBCException e) {
             throw new RuntimeException(e);
         }
 

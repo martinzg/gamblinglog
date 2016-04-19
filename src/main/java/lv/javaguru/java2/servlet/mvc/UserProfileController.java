@@ -2,6 +2,7 @@ package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,7 +19,7 @@ public class UserProfileController implements MVCController {
         Long id = null;
         try {
             id = userDAO.getIdByEmail(req.getUserPrincipal().getName());
-        } catch (DBException e) {
+        } catch (JDBCException e) {
             e.printStackTrace();
         }
         return new MVCModel("/UserProfile.jsp", id, null);

@@ -3,6 +3,7 @@ package lv.javaguru.java2.servlet.mvc;
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.User;
+import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +46,7 @@ public class ChangePasswordController implements MVCController{
                 return new MVCModel("/ChangePassword.jsp", null, "Your password reset link has expired!" + session.getId());
             }
         }
-        catch (DBException e) {
+        catch (JDBCException e) {
             throw new RuntimeException(e);
         }
 
