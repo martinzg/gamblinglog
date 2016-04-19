@@ -26,7 +26,7 @@ public class StakesController implements MVCController {
     public MVCModel processRequestGet(HttpServletRequest request) {
 
         try {
-            Long id = Long.parseLong(userDAO.getIdByEmail(request.getUserPrincipal().getName()).toString());
+            Long id = userDAO.getIdByEmail(request.getUserPrincipal().getName().toString());
             List<Stake> stakeList = stakeDAO.getAllStakes(id);
             return new MVCModel("/Stakes.jsp", stakeList, null);
         } catch (DBException e) {

@@ -32,6 +32,11 @@ public class StakeAddController implements MVCController {
 
     @Override
     public MVCModel processRequestPost(HttpServletRequest request) {
+
+        if (request.getParameter("back") != null) {
+            return new MVCModel("/Redirect.jsp", "/stakes", null);
+        }
+
         try {
             Stake stake = new Stake();
             getStakeAddData(stake, request);
@@ -42,6 +47,7 @@ public class StakeAddController implements MVCController {
             return new MVCModel("/StakeAdd.jsp", null, "Failure!");
         }
     }
+
     private void getStakeAddData(Stake stake, HttpServletRequest request) throws DBException {
         String str = request.getParameter("date");
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
