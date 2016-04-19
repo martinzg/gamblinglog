@@ -31,7 +31,7 @@ public class UserRegistrationController implements MVCController {
                 if (req.getParameter("password").equals(req.getParameter("confirm password"))){
                     getRegistrationFormInput(user, req);
                     userDAO.create(user);
-                    req.getSession().setAttribute("message", "User registered successfully!");
+                    req.getSession().setAttribute("messageSuccess", "User registered successfully!");
                     return new MVCModel("/Redirect.jsp", "/login", null);
                 }
                 else {

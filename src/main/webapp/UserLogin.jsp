@@ -18,10 +18,10 @@
         <input type="submit" name="submit" value="Log In">
     </form>
 
-    <% if (session.getAttribute("message") != null) { %>
-        <c:set var="message" scope="session" value='<%= session.getAttribute("message").toString() %>'/>
+    <% if (session.getAttribute("messageSuccess") != null) { %>
+        <c:set var="message" scope="session" value='<%= session.getAttribute("messageSuccess").toString() %>'/>
         <h4 style="color:red"><c:out value="${message}" /></h4>
-    <%  session.removeAttribute("message");
+    <%  session.removeAttribute("messageSuccess");
     } %>
 
     <table>
