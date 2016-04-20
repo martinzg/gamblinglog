@@ -1,10 +1,10 @@
 package lv.javaguru.java2.database;
 
-
 import org.hibernate.JDBCException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 import java.lang.reflect.ParameterizedType;
@@ -12,16 +12,14 @@ import java.util.List;
 
 public class GenericHibernateDAOImpl<T> {
 
-    private Class<T> persistentClass;
+    protected Class<T> persistentClass;
 
     public GenericHibernateDAOImpl() {
-        this.persistentClass = (Class<T>) ((ParameterizedType) getClass()
-                .getGenericSuperclass()).getActualTypeArguments()[0];
+        this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
     @Autowired
     protected SessionFactory sessionFactory;
-
 
     @Transactional
     public void create(T obj)  throws JDBCException {
@@ -48,16 +46,6 @@ public class GenericHibernateDAOImpl<T> {
     @Transactional
     public List<T> getAll()  throws JDBCException {
         return sessionFactory.getCurrentSession().createCriteria(persistentClass).list();
-    }
-
-    @Transactional
-    public T getByObjectName(String objectName)  throws JDBCException {
-        return null;
-    }
-
-    @Transactional
-    public boolean isEmpty()  throws JDBCException {
-        return sessionFactory.getCurrentSession().createCriteria(persistentClass).setMaxResults(1).list().size() == 0;
     }
 
 }
