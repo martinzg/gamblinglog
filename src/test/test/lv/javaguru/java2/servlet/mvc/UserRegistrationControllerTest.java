@@ -64,7 +64,7 @@ public class UserRegistrationControllerTest {
         MVCModel mvcModel = userRegistrationController.processRequestPost(req);
         assertEquals("/Redirect.jsp", mvcModel.getJspName());
         assertEquals("/login", mvcModel.getData());
-        assertEquals("User registered successfully!", mvcModel.getMessage());
+        assertNull(mvcModel.getMessage());
 
         userDAO.delete(userDAO.getIdByEmail(emailSuccess));
     }
