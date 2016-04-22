@@ -1,7 +1,7 @@
 package test.lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.jdbc.UserDAOImpl;
+import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.servlet.mvc.MVCModel;
 import lv.javaguru.java2.servlet.mvc.SpringAppConfig;
@@ -16,6 +16,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -31,7 +32,7 @@ public class UserRegistrationControllerTest {
     private UserRegistrationController userRegistrationController;
 
     @Autowired
-    private UserDAOImpl userDAO;
+    private UserDAO userDAO;
 
     private String firstName = "firstName";
     private String lastName = "lastName";
@@ -41,6 +42,7 @@ public class UserRegistrationControllerTest {
 
     @Mock
     HttpServletRequest req = mock(HttpServletRequest.class);
+    HttpSession session = mock(HttpSession.class);
 
     @Before
     public void createTestUser() throws DBException {
@@ -60,6 +62,7 @@ public class UserRegistrationControllerTest {
         doReturn(emailSuccess).when(req).getParameter("email");
         doReturn("pass").when(req).getParameter("password");
         doReturn("pass").when(req).getParameter("confirm password");
+        doReturn(session).when(req).getSession();
 
         MVCModel mvcModel = userRegistrationController.processRequestPost(req);
         assertEquals("/Redirect.jsp", mvcModel.getJspName());
