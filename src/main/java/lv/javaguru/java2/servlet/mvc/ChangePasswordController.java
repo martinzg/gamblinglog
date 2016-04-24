@@ -30,20 +30,19 @@ public class ChangePasswordController implements MVCController{
         try {
             if (session.getId().equals(req.getParameter("link"))){
                 if (req.getParameter("password").equals(req.getParameter("confirm password"))){
-
                     Long userId = Long.parseLong(session.getAttribute("userId").toString());
                     User user = userDAO.getById(userId);
                     user.setPassword(hashPassword(req));
                     userDAO.update(user);
-
-                    return new MVCModel("/Redirect.jsp", "/login", "Your password has been successfully changed!");
+                    req.getSession().setAttribute("messageSuccess", "Your password has been successfully changed!");
+                    return new MVCModel("/Redirect.jsp", "/login", null);
                 }
                 else {
                     return new MVCModel("/ChangePassword.jsp", null, "'New Password' and 'Confirm New Password' do not match!");
                 }
             }
             else {
-                return new MVCModel("/ChangePassword.jsp", null, "Your password reset link has expired!" + session.getId());
+                return new MVCModel("/ChangePassword.jsp", null, "Your password reset link has expired!");
             }
         }
         catch (JDBCException e) {

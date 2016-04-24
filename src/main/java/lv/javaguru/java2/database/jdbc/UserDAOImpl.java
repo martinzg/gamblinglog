@@ -43,6 +43,7 @@ public class UserDAOImpl extends GenericHibernateDAOImpl<User> implements UserDA
         User obj = (User) session.get(persistentClass, id);
         session.delete(obj);
         deleteFromUserRoles(obj);
+        deleteFromGamblingSites(obj);
     }
 
     private void createUserRole (User obj){
@@ -55,6 +56,13 @@ public class UserDAOImpl extends GenericHibernateDAOImpl<User> implements UserDA
 
     private void deleteFromUserRoles (User obj){
         String hql = "delete from USER_ROLES where UserID = :UserID";
+        SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(hql);
+        query.setParameter("UserID", obj.getUserId());
+        query.executeUpdate();
+    }
+
+    private void deleteFromGamblingSites (User obj){
+        String hql = "delete from SITES where UserID = :UserID";
         SQLQuery query = sessionFactory.getCurrentSession().createSQLQuery(hql);
         query.setParameter("UserID", obj.getUserId());
         query.executeUpdate();
