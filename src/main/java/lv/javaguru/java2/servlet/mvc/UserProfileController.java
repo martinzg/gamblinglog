@@ -1,6 +1,5 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,22 +15,16 @@ public class UserProfileController implements MVCController {
 
     @Override
     public MVCModel processRequestGet(HttpServletRequest req) {
-        Long id = null;
-        try {
-            id = userDAO.getIdByEmail(req.getUserPrincipal().getName());
-        } catch (JDBCException e) {
-            e.printStackTrace();
-        }
-        return new MVCModel("/UserProfile.jsp", id, null);
+        return new MVCModel("/UserProfile.jsp", null, null);
     }
 
     @Override
     public MVCModel processRequestPost(HttpServletRequest req) {
-        if (req.getParameter("show sites") != null){
-            return new MVCModel("/Redirect.jsp", "/java2/gamblingsites", null);
+        if (req.getParameter("edit") != null){
+            return new MVCModel("/Redirect.jsp", "/userprofile?param=1", null);
         }
         else {
-            return null;
+            return new MVCModel("/Redirect.jsp", "/userprofile", null);
         }
     }
 
