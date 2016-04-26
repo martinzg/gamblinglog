@@ -10,25 +10,31 @@
 
     <table>
         <tr>
-            <td>
-                <button formmethod="post">Edit Profile</button>
+            <td valign="top">
+                <form method="post">
+                    <input type="submit" name="edit" value="Edit Profile">
+                </form>
             </td>
-            <td>
+            <td valign="top">
                 <button onclick="deleteUserFunction()">Delete User</button>
             </td>
         </tr>
     </table>
 
+    <%@include file="EditUserProfile.jsp" %>
+
     <script>
         function deleteUserFunction() {
             if (confirm("Are you sure you want to delete your Profile?") == true) {
-                location.href = "/deleteuser"
+                location.href = "/deleteuser";
             }
         }
     </script>
 
-    <c:set var="id" scope="session" value='<%= request.getAttribute("data") %>'/>
-    <h4 style="color:red"><c:out value="${id}" /></h4>
+    <c:set var="message" scope="session" value='<%= request.getAttribute("message") %>'/>
+    <c:if test="${message != null}">
+        <h4 style="color:red"><c:out value="${message}" /></h4>
+    </c:if>
 
 </body>
 </html>

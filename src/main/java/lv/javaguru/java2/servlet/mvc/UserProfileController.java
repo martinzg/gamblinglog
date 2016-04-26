@@ -1,7 +1,8 @@
 package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.UserDAO;
-import org.hibernate.JDBCException;
+import lv.javaguru.java2.domain.User;
+import lv.javaguru.java2.resources.HashPassword;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,10 +22,25 @@ public class UserProfileController implements MVCController {
     @Override
     public MVCModel processRequestPost(HttpServletRequest req) {
         if (req.getParameter("edit") != null){
-            return new MVCModel("/Redirect.jsp", "/userprofile?param=1", null);
+            User user = userDAO.getById(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
+            return new MVCModel("/UserProfile.jsp", user, null);
+        }
+        if (req.getParameter("update") != null){
+            User user = userDAO.getById(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
+            getUserProfileFormInput(user, req);
+            userDAO.update(user);
+            return new MVCModel("/UserProfile.jsp", null, "User Profile updated successfully!");
         }
         else {
             return new MVCModel("/Redirect.jsp", "/userprofile", null);
+        }
+    }
+
+    private void getUserProfileFormInput(User user, HttpServletRequest req){
+        user.setFirstName(req.getParameter("firstname"));
+        user.setLastName(req.getParameter("lastname"));
+        if (!req.getParameter("password").equals(user.getPassword())){
+            user.setPassword(HashPassword.hashPassword(req));
         }
     }
 
