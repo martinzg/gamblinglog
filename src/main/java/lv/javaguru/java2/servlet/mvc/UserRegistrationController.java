@@ -15,6 +15,10 @@ public class UserRegistrationController implements MVCController {
     @Autowired
     private UserDAO userDAO;
 
+    public void setUserDAO (UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
+
     @Override
     public MVCModel processRequestGet(HttpServletRequest req) {
         return new MVCModel("/UserRegistration.jsp", null, null);

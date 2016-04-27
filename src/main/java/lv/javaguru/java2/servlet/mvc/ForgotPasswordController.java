@@ -1,6 +1,5 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.SendEmailFromGmail;
 import org.hibernate.JDBCException;
@@ -15,6 +14,10 @@ public class ForgotPasswordController implements MVCController{
 
     @Autowired
     private UserDAO userDAO;
+
+    public void setUserDAO (UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
 
     @Override
     public MVCModel processRequestGet(HttpServletRequest req) {

@@ -16,6 +16,10 @@ public class ChangePasswordController implements MVCController{
     @Autowired
     private UserDAO userDAO;
 
+    public void setUserDAO (UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
+
     @Override
     public MVCModel processRequestGet(HttpServletRequest req) {
         return new MVCModel("/ChangePassword.jsp", null, null);
@@ -33,7 +37,7 @@ public class ChangePasswordController implements MVCController{
                     User user = userDAO.getById(userId);
                     user.setPassword(HashPassword.hashPassword(req));
                     userDAO.update(user);
-                    req.getSession().setAttribute("messageSuccess", "Your password has been successfully changed!");
+                    session.setAttribute("messageSuccess", "Your password has been successfully changed!");
                     return new MVCModel("/Redirect.jsp", "/login", null);
                 }
                 else {
