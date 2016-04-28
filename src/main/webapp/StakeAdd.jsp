@@ -28,10 +28,10 @@
     <input type="text" name="betType" required>
     <br>
     Bet amount:<br>
-    <input type="number" name="betAmount" required>
+    <input type="number" step="0.01" name="betAmount" required>
     <br>
     Coefficient:<br>
-    <input type="number" name="coefficient" required>
+    <input type="number" step="0.001" name="coefficient" required>
     <br>
     Result:<br>
     <input type="text" name="result" required>
