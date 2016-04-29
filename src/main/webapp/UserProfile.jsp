@@ -8,6 +8,14 @@
 	<%@include file="Menu.jsp" %>
     <h1>User Profile:</h1>
 
+
+    <div style="width:128px;height:128px;overflow:hidden;border:1px solid black" >
+        <img src="/images/avatar" alt="HTML5 Icon">
+    </div>
+    <br>
+    <%@include file="UploadFile.jsp" %>
+
+
     <table>
         <tr>
             <td valign="top">

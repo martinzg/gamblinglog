@@ -44,6 +44,7 @@ public class MVCFilter implements Filter {
         urlToControllerMap = new HashMap<>();
         urlToControllerMap.put("/hello", getBean(HelloWorldController.class));
         urlToControllerMap.put("/", getBean(LoginController.class));
+        urlToControllerMap.put("/images", getBean(ImageController.class));
         urlToControllerMap.put("/deleteuser", getBean(DeleteUserController.class));
         urlToControllerMap.put("/login", getBean(LoginController.class));
         urlToControllerMap.put("/logout", getBean(LogoutController.class));
@@ -71,17 +72,21 @@ public class MVCFilter implements Filter {
         String contextURI = req.getServletPath();
         String method = req.getMethod();
 
-        MVCController controller = urlToControllerMap.get(contextURI);
-        MVCModel model;
+        MVCController controller;
+        if(contextURI.contains("/images")){
+            controller = urlToControllerMap.get("/images");
+        }
+        else {
+            controller = urlToControllerMap.get(contextURI);
+        }
 
+        MVCModel model;
         if (method.equalsIgnoreCase("GET")){
-            model = controller.processRequestGet(req);
+            model = controller.processRequestGet(req, resp);
         }
         else {
             model = controller.processRequestPost(req);
         }
-
-        model.getJspName();
 
         req.setAttribute("data", model.getData());
         req.setAttribute("message", model.getMessage());

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class UserRegistrationController implements MVCController {
@@ -20,7 +21,7 @@ public class UserRegistrationController implements MVCController {
     }
 
     @Override
-    public MVCModel processRequestGet(HttpServletRequest req) {
+    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
         return new MVCModel("/UserRegistration.jsp", null, null);
     }
 
@@ -56,6 +57,7 @@ public class UserRegistrationController implements MVCController {
         user.setLastName(req.getParameter("lastname"));
         user.setEmail(req.getParameter("email"));
         user.setPassword(HashPassword.hashPassword(req));
+        user.setImage(false);
     }
 
 }

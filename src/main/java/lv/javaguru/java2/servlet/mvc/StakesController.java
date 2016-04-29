@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -23,7 +24,7 @@ public class StakesController implements MVCController {
     private StakeDAO stakeDAO;
 
     @Override
-    public MVCModel processRequestGet(HttpServletRequest request) {
+    public MVCModel processRequestGet(HttpServletRequest request, HttpServletResponse resp) {
 
         try {
             Long id = userDAO.getIdByEmail(request.getUserPrincipal().getName().toString());

@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servlet.mvc;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
@@ -20,7 +21,7 @@ public class GamblingSiteAddController implements MVCController {
 	private GamblingSiteDAO siteDAO;
 
 	@Override
-	public MVCModel processRequestGet(HttpServletRequest request) {
+	public MVCModel processRequestGet(HttpServletRequest request, HttpServletResponse resp) {
 		return new MVCModel("/GamblingSiteAdd.jsp", null, null);
 	}
 

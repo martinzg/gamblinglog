@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 
@@ -21,7 +22,7 @@ public class GamblingSitesController implements MVCController {
     private GamblingSiteDAO gamblingSiteDAO;
 
     @Override
-    public MVCModel processRequestGet(HttpServletRequest req) {
+    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
         try {
             Long id = userDAO.getIdByEmail(req.getUserPrincipal().getName());
             List<GamblingSite> gamblingSiteList = gamblingSiteDAO.getAllSitesByUserId(id);

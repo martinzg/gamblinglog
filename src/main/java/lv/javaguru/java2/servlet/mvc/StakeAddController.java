@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +27,7 @@ public class StakeAddController implements MVCController {
     private StakeDAO stakeDAO;
 
     @Override
-    public MVCModel processRequestGet(HttpServletRequest request) {
+    public MVCModel processRequestGet(HttpServletRequest request, HttpServletResponse resp) {
         return new MVCModel("/StakeAdd.jsp", null, null);
     }
 
