@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`users` (
   `LastName`  VARCHAR(32) NOT NULL,
   `Email`     VARCHAR(32) NOT NULL,
   `Password`  VARCHAR(32) NOT NULL,
+  `Image`     BOOL        NOT NULL,
   PRIMARY KEY (`UserID`)
 )
 ENGINE = InnoDB
