@@ -29,6 +29,7 @@ public class UserDAOImplTest {
     private String lastName = "lastName";
     private String email = "email@email.com";
     private String password = "password";
+    private Boolean image = false;
 
     @After
     public void tearDown() throws DBException {
@@ -39,7 +40,7 @@ public class UserDAOImplTest {
 
     @Test
     public void testCreate() throws DBException {
-        User user = UserCreator.createUser(firstName, lastName, email, password);
+        User user = UserCreator.createUser(firstName, lastName, email, password, image);
         userDAO.create(user);
         User userFromDB = userDAO.getById(user.getUserId());
 
@@ -53,8 +54,8 @@ public class UserDAOImplTest {
 
     @Test
     public void testMultipleUserCreation() throws DBException {
-        User user1 = UserCreator.createUser(firstName, lastName, email, password);
-        User user2 = UserCreator.createUser(firstName, lastName, email, password);
+        User user1 = UserCreator.createUser(firstName, lastName, email, password, image);
+        User user2 = UserCreator.createUser(firstName, lastName, email, password, image);
         userDAO.create(user1);
         userDAO.create(user2);
         List<User> users = userDAO.getAll();
@@ -63,7 +64,7 @@ public class UserDAOImplTest {
 
     @Test
     public void testGetUserById() throws DBException {
-        User user = UserCreator.createUser(firstName, lastName, email, password);
+        User user = UserCreator.createUser(firstName, lastName, email, password, image);
         userDAO.create(user);
         assertEquals(user, userDAO.getById(user.getUserId()));
     }
@@ -75,7 +76,7 @@ public class UserDAOImplTest {
 
     @Test
     public void testGetUserIdByEmail() throws DBException {
-        User user = UserCreator.createUser(firstName, lastName, email, password);
+        User user = UserCreator.createUser(firstName, lastName, email, password, image);
         userDAO.create(user);
         assertEquals(Long.valueOf(user.getUserId()), userDAO.getIdByEmail(email));
     }
@@ -87,7 +88,7 @@ public class UserDAOImplTest {
 
     @Test
     public void testGetAll() throws DBException {
-        User user = UserCreator.createUser(firstName, lastName, email, password);
+        User user = UserCreator.createUser(firstName, lastName, email, password, image);
         userDAO.create(user);
         User userFromDb = null;
         List<User> userListFromDb = userDAO.getAll();
@@ -103,7 +104,7 @@ public class UserDAOImplTest {
     @Test
     public void testDeleteUser() throws DBException {
         int userListSize = userDAO.getAll().size();
-        User user = UserCreator.createUser(firstName, lastName, email, password);
+        User user = UserCreator.createUser(firstName, lastName, email, password, image);
         userDAO.create(user);
         userDAO.delete(userDAO.getIdByEmail(email));
         assertNull(userDAO.getIdByEmail(email));
@@ -112,7 +113,7 @@ public class UserDAOImplTest {
 
     @Test
     public void testUpdateUser() throws DBException {
-        User user = UserCreator.createUser(firstName, lastName, "new" + email, password);
+        User user = UserCreator.createUser(firstName, lastName, "new" + email, password, image);
         userDAO.create(user);
         user = updateUser(user);
         userDAO.update(user);
