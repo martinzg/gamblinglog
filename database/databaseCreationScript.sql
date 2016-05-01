@@ -83,10 +83,10 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`stakes` (
 DROP TABLE IF EXISTS `java2_test`.`sites` ;
 
 CREATE TABLE IF NOT EXISTS `java2_test`.`sites` (
-  `ID`          INT(11)   NOT NULL AUTO_INCREMENT,
-  `Name`        CHAR(50)  NOT NULL,
-  `URL`         CHAR(255) NOT NULL,
-  `Description` CHAR(255) NOT NULL,
+  `ID`          BIGINT(11)   NOT NULL AUTO_INCREMENT,
+  `Name`        VARCHAR(50)  NOT NULL,
+  `URL`         VARCHAR(255) NOT NULL,
+  `Description` VARCHAR(255) NOT NULL,
   `UserID`      BIGINT(11)   NOT NULL,
   PRIMARY KEY (`ID`),
   CONSTRAINT UserSitesFK FOREIGN KEY (`UserID`) REFERENCES users (`UserID`)
