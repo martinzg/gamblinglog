@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class UserProfileController implements MVCController {
@@ -15,7 +16,7 @@ public class UserProfileController implements MVCController {
     private UserDAO userDAO;
 
     @Override
-    public MVCModel processRequestGet(HttpServletRequest req) {
+    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
         return new MVCModel("/UserProfile.jsp", null, null);
     }
 
@@ -31,8 +32,11 @@ public class UserProfileController implements MVCController {
             userDAO.update(user);
             return new MVCModel("/UserProfile.jsp", null, "User Profile updated successfully!");
         }
+        if (req.getParameter("upload") != null){
+            return new MVCModel("/Redirect.jsp", "/stakes", "Image Uploaded");
+        }
         else {
-            return new MVCModel("/Redirect.jsp", "/userprofile", null);
+            return new MVCModel("/UserProfile.jsp", null, null);
         }
     }
 

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import static java.sql.Date.*;
 
@@ -38,7 +39,7 @@ public class AddOfflineGamingEventController implements MVCController {
     }
 
     @Override
-    public MVCModel processRequestGet(HttpServletRequest req) {
+    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
         OfflineGamblingEventData data = new OfflineGamblingEventData();
         addDefaultInformation(data);
         return new MVCModel("/AddOfflineGamblingEvent.jsp", data, null);

@@ -23,6 +23,9 @@ public class User {
     @Column (name = "Password", nullable = false)
     private String password;
 
+    @Column (name = "Image", nullable = false)
+    private Boolean image;
+
 
     public long getUserId() {
         return userId;
@@ -62,6 +65,14 @@ public class User {
 
     public void setPassword(String password){
         this.password = password;
+    }
+
+    public Boolean getImage(){
+        return image;
+    }
+
+    public void setImage (Boolean image){
+        this.image = image;
     }
 
     @Override

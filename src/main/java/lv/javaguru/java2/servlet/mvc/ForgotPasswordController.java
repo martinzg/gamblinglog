@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @Component
@@ -20,7 +21,7 @@ public class ForgotPasswordController implements MVCController{
     }
 
     @Override
-    public MVCModel processRequestGet(HttpServletRequest req) {
+    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
         return new MVCModel("/ForgotPassword.jsp", null, null);
     }
 
