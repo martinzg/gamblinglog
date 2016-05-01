@@ -30,11 +30,11 @@
         </tr>
         <c:set var="gamblingSiteList" scope="session" value='<%= request.getAttribute("data") %>'/>
         <c:if test="${not empty gamblingSiteList}">
-            <c:forEach var="site" varStatus="status" items="${gamblingSiteList}">
+            <c:forEach var="site" items="${gamblingSiteList}">
                 <tr>
-                    <td width="150px"><c:out value="${site.name}"/></td>
-                    <td width="150px"><c:out value="${site.URL}"/></td>
-                    <td width="150px"><c:out value="${site.description}"/></td>
+                    <td width="150px">${site.name}</td>
+                    <td width="150px">${site.URL}</td>
+                    <td width="150px">${site.description}</td>
                 </tr>
             </c:forEach>
         </c:if>
