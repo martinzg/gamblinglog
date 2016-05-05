@@ -9,8 +9,8 @@
     <h1>User Profile:</h1>
 
 
-    <div style="width:128px;height:128px;overflow:hidden;border:1px solid black" >
-        <img src="/images/avatar" alt="HTML5 Icon">
+    <div style="width:128px;height:128px;overflow:hidden;border:1px solid black;align-content:center" >
+        <img src="/images/avatar" alt="HTML5 Icon" style="max-width:100%;height:128px">
     </div>
     <br>
     <%@include file="UploadFile.jsp" %>

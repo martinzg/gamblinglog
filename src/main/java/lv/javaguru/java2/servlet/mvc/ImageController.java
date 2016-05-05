@@ -22,9 +22,7 @@ public class ImageController implements MVCController {
     public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
 
         ServletContext context = req.getServletContext();
-        // Get the absolute path of the image
         String filename = "C:\\Images\\" + checkUserImage(req) + ".png";
-        // retrieve mimeType dynamically
         String mime = context.getMimeType(filename);
         if (mime == null) {
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -40,7 +38,7 @@ public class ImageController implements MVCController {
         try {
             in = new FileInputStream(file);
             out = resp.getOutputStream();
-            // Copy the contents of the file to the output stream
+
             byte[] buf = new byte[1024];
             int count;
             while ((count = in.read(buf)) >= 0) {
