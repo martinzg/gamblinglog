@@ -3,6 +3,46 @@
 <html>
 <head>
     <title>Gambling Sites</title>
+    <script>
+    	function deleteSelectedSites() {
+    		var selectAllChecked = document.getElementById("select-all").checked
+    		var selectedSiteIds = ""
+    		var selectOnes = document.getElementsByClassName("select-one")
+    		for (var i = 0; i < selectOnes.length; i++) {
+    			if (selectOnes[i].checked || selectAllChecked) {
+    				if (selectedSiteIds.length > 0) {
+    					selectedSiteIds += ","
+    				}
+    				selectedSiteIds += selectOnes[i].value
+    			}
+    		}
+    		post("/gamblingsites", {siteIds: selectedSiteIds})
+    	}
+    	
+    	function post(path, params, method) {
+    	    method = method || "post"; // Set method to post by default if not specified.
+
+    	    // The rest of this code assumes you are not using a library.
+    	    // It can be made less wordy if you use one.
+    	    var form = document.createElement("form");
+    	    form.setAttribute("method", method);
+    	    form.setAttribute("action", path);
+
+    	    for(var key in params) {
+    	        if(params.hasOwnProperty(key)) {
+    	            var hiddenField = document.createElement("input");
+    	            hiddenField.setAttribute("type", "hidden");
+    	            hiddenField.setAttribute("name", key);
+    	            hiddenField.setAttribute("value", params[key]);
+
+    	            form.appendChild(hiddenField);
+    	         }
+    	    }
+
+    	    document.body.appendChild(form);
+    	    form.submit();
+    	}
+    </script>
 </head>
 <body>
 	<%@include file="Menu.jsp" %>
@@ -15,15 +55,14 @@
                 </form>
             </td>
             <td>
-                <form method="post">
-                    <input type="submit" name="delete site" value="Delete Site">
-                </form>
+                <button onclick="deleteSelectedSites()">Delete</button>
             </td>
         </tr>
     </table>
 
     <table border="1">
         <tr>
+        	<th><input type="checkbox" id="select-all"></th>
             <th>Site Name</th>
             <th>Site URL</th>
             <th>Site Description</th>
@@ -32,6 +71,7 @@
         <c:if test="${not empty gamblingSiteList}">
             <c:forEach var="site" items="${gamblingSiteList}">
                 <tr>
+                	<td><input type="checkbox" class="select-one" value="${site.id}"></td>
                     <td width="150px">${site.name}</td>
                     <td width="150px">${site.URL}</td>
                     <td width="150px">${site.description}</td>

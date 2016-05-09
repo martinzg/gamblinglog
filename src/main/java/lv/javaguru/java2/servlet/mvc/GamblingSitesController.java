@@ -35,7 +35,16 @@ public class GamblingSitesController implements MVCController {
             return new MVCModel("/Redirect.jsp", "/gambling-site-add", null);
         }
         else {
-            return new MVCModel("/GamblingSites.jsp", null, null);
+			String siteIdsParameter = req.getParameter("siteIds");
+			if (siteIdsParameter != null && !siteIdsParameter.isEmpty()) {
+				String[] siteIds = siteIdsParameter.split(",");
+				for (String siteId : siteIds) {
+					if (!siteId.isEmpty()) {
+						gamblingSiteDAO.delete(Long.valueOf(siteId));
+					}
+				}
+			}
+			return new MVCModel("/Redirect.jsp", "/gamblingsites", null);
         }
     }
 
