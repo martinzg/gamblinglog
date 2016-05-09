@@ -3,12 +3,12 @@ package lv.javaguru.java2.servlet.mvc;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import lv.javaguru.java2.database.DBException;
-import lv.javaguru.java2.database.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.GamblingSiteDAO;
+import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.GamblingSite;
 
 @Component

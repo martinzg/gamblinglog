@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.FilterType;
 
 import lv.javaguru.java2.database.GamblingSiteDAO;
+import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.servlet.mvc.GamblingSiteAddController;
 
 @Configuration
@@ -17,5 +18,10 @@ public class SpringAppConfigTest {
 	@Bean
 	public GamblingSiteDAO siteDAO() {
 		return Mockito.mock(GamblingSiteDAO.class);
+	}
+
+	@Bean
+	public UserDAO userDAO() {
+		return Mockito.mock(UserDAO.class);
 	}
 }
