@@ -13,7 +13,7 @@ public class HelloWorldController {
 
     @RequestMapping(value = "hello", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView processRequest(HttpServletRequest req, HttpServletResponse resp) {
-        return new ModelAndView("/helloWorld", "model", "Hello from MVC");
+        return new ModelAndView("HelloWorld", "model", "Hello from MVC");
     }
 
 }
