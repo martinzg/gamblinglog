@@ -1,21 +1,19 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Component
-public class HelloWorldController implements MVCController {
+@Controller
+public class HelloWorldController {
 
-    @Override
-    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
-        return new MVCModel("/helloWorld.jsp", null,"Hello from MVC");
-    }
-
-    @Override
-    public MVCModel processRequestPost(HttpServletRequest req) {
-        return new MVCModel("/helloWorld.jsp", null,"Hello from MVC");
+    @RequestMapping(value = "hello", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView processRequest(HttpServletRequest req, HttpServletResponse resp) {
+        return new ModelAndView("/helloWorld", "model", "Hello from MVC");
     }
 
 }
