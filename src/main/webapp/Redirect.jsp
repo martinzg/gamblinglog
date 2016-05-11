@@ -6,7 +6,7 @@
 </head>
 <body>
 
-        <% response.sendRedirect(request.getAttribute("data").toString());%>
+        <% response.sendRedirect(request.getAttribute("model").toString());%>
 
 </body>
 </html>

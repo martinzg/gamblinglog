@@ -4,40 +4,35 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 import lv.javaguru.java2.servlet.mvc.LoginController;
-import lv.javaguru.java2.servlet.mvc.MVCModel;
 import lv.javaguru.java2.servlet.mvc.SpringAppConfig;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfig.class)
+@WebAppConfiguration
 
 public class LoginControllerTest {
 
-    @Autowired
-    private LoginController loginController;
-
-    String email = "email@email.com";
-    String password = "password";
+    private LoginController loginController = new LoginController();
 
     @Mock
     HttpServletRequest req = mock(HttpServletRequest.class);
+    HttpServletResponse resp = mock(HttpServletResponse.class);
 
     @Test
     public void testSuccessfulLogin() throws Exception {
-        doReturn(email).when(req).getParameter("email");
-        doReturn(password).when(req).getParameter("password");
-
-        MVCModel mvcModel = loginController.processRequestPost(req);
-        assertEquals("/Redirect.jsp", mvcModel.getJspName());
-        assertEquals("/userprofile", mvcModel.getData());
-        assertNull(mvcModel.getMessage());
+        ModelAndView modelAndView = loginController.processRequest(req, resp);
+        assertEquals("Redirect", modelAndView.getViewName());
+        assertEquals("{model=/userprofile}", modelAndView.getModel().toString());
     }
 
 }

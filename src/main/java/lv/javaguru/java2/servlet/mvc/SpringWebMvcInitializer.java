@@ -23,6 +23,6 @@ public class SpringWebMvcInitializer extends AbstractDispatcherServletInitialize
     }
     @Override
     protected String[] getServletMappings() {
-        return new String[]{"/hello"};
+        return new String[]{"/login", "/logout", "/userprofile", "/hello"};
     }
 }
