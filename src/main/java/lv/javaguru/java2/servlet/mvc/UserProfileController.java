@@ -33,7 +33,7 @@ public class UserProfileController {
     public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
         if (request.getParameter("edit") != null){
             User user = userDAO.getById(userDAO.getIdByEmail(request.getUserPrincipal().getName()));
-            return new ModelAndView("UserProfile", "model", user);
+            return new ModelAndView("UserProfile", "user", user);
         }
         if (request.getParameter("update") != null){
             User user = userDAO.getById(userDAO.getIdByEmail(request.getUserPrincipal().getName()));
