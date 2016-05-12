@@ -5,13 +5,16 @@ import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.resources.HashPassword;
 import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@Component
-public class UserRegistrationController implements MVCController {
+@Controller
+public class UserRegistrationController {
 
     @Autowired
     private UserDAO userDAO;
@@ -20,30 +23,30 @@ public class UserRegistrationController implements MVCController {
         this.userDAO = userDAO;
     }
 
-    @Override
-    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
-        return new MVCModel("/UserRegistration.jsp", null, null);
+    @RequestMapping(value = "registration", method = {RequestMethod.GET})
+    public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("UserRegistration", "model", null);
     }
 
-    @Override
-    public MVCModel processRequestPost(HttpServletRequest req) {
+    @RequestMapping(value = "registration", method = {RequestMethod.POST})
+    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
 
         User user = new User();
 
         try {
-            if (userDAO.getIdByEmail(req.getParameter("email")) == null) {
-                if (req.getParameter("password").equals(req.getParameter("confirm password"))){
-                    getRegistrationFormInput(user, req);
+            if (userDAO.getIdByEmail(request.getParameter("email")) == null) {
+                if (request.getParameter("password").equals(request.getParameter("confirm password"))){
+                    getRegistrationFormInput(user, request);
                     userDAO.create(user);
-                    req.getSession().setAttribute("messageSuccess", "User registered successfully!");
-                    return new MVCModel("/Redirect.jsp", "/login", null);
+                    request.getSession().setAttribute("messageSuccess", "User registered successfully!");
+                    return new ModelAndView("Redirect", "model", "/login");
                 }
                 else {
-                    return new MVCModel("/UserRegistration.jsp", null, "'Password' and 'Confirm Password' do not match!");
+                    return new ModelAndView("UserRegistration", "model", "'Password' and 'Confirm Password' do not match!");
                 }
             }
             else{
-                return new MVCModel("/UserRegistration.jsp", null, "User with such email already exists!");
+                return new ModelAndView("UserRegistration", "model", "User with such email already exists!");
             }
         }
         catch (JDBCException e) {

@@ -49,7 +49,7 @@ public class MVCFilter implements Filter {
         //urlToControllerMap.put("/login", getBean(LoginController.class));
         //urlToControllerMap.put("/logout", getBean(LogoutController.class));
         //urlToControllerMap.put("/userprofile", getBean(UserProfileController.class));
-        urlToControllerMap.put("/registration", getBean(UserRegistrationController.class));
+        //urlToControllerMap.put("/registration", getBean(UserRegistrationController.class));
         urlToControllerMap.put("/gamblingsites", getBean(GamblingSitesController.class));
 		urlToControllerMap.put("/gambling-site-add", getBean(GamblingSiteAddController.class));
         urlToControllerMap.put("/stakes", getBean(StakesController.class));

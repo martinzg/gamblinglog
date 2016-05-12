@@ -25,7 +25,7 @@
         <br><br>
         <input type="submit" name="submit" value="Submit">
     </form>
-    <c:set var="message" scope="session" value='<%= request.getAttribute("message") %>'/>
+    <c:set var="message" scope="session" value='<%= request.getAttribute("model") %>'/>
     <c:if test="${message != null}">
         <h4 style="color:red"><c:out value="${message}" /></h4>
     </c:if>
