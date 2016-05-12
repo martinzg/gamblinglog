@@ -6,14 +6,17 @@ import lv.javaguru.java2.resources.FileUpload;
 import lv.javaguru.java2.resources.HashPassword;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-@Component
-public class UserProfileController implements MVCController {
+@Controller
+public class UserProfileController {
 
     @Autowired
     private UserDAO userDAO;
@@ -21,28 +24,28 @@ public class UserProfileController implements MVCController {
     @Autowired
     private FileUpload fileUpload;
 
-    @Override
-    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
-        return new MVCModel("/UserProfile.jsp", null, null);
+    @RequestMapping(value = "userprofile", method = {RequestMethod.GET})
+    public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("UserProfile", "model", null);
     }
 
-    @Override
-    public MVCModel processRequestPost(HttpServletRequest req) {
-        if (req.getParameter("edit") != null){
-            User user = userDAO.getById(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
-            return new MVCModel("/UserProfile.jsp", user, null);
+    @RequestMapping(value = "userprofile", method = {RequestMethod.POST})
+    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
+        if (request.getParameter("edit") != null){
+            User user = userDAO.getById(userDAO.getIdByEmail(request.getUserPrincipal().getName()));
+            return new ModelAndView("UserProfile", "model", user);
         }
-        if (req.getParameter("update") != null){
-            User user = userDAO.getById(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
-            getUserProfileFormInput(user, req);
+        if (request.getParameter("update") != null){
+            User user = userDAO.getById(userDAO.getIdByEmail(request.getUserPrincipal().getName()));
+            getUserProfileFormInput(user, request);
             userDAO.update(user);
-            return new MVCModel("/UserProfile.jsp", null, "User Profile updated successfully!");
+            return new ModelAndView("UserProfile", "model", "User Profile updated successfully!");
         }
-        if (req.getParameter("upload") != null){
-            return verifyAndUploadFile(req);
+        if (request.getParameter("upload") != null){
+            return verifyAndUploadFile(request);
         }
         else {
-            return new MVCModel("/UserProfile.jsp", null, null);
+            return new ModelAndView("UserProfile", "model", null);
         }
     }
 
@@ -60,7 +63,7 @@ public class UserProfileController implements MVCController {
         userDAO.update(user);
     }
 
-    private MVCModel verifyAndUploadFile (HttpServletRequest req){
+    private ModelAndView verifyAndUploadFile (HttpServletRequest req){
         String message;
         try{
             Part part = req.getPart("file");
@@ -81,7 +84,7 @@ public class UserProfileController implements MVCController {
             e.printStackTrace();
             message = "Image upload failed!";
         }
-        return new MVCModel("/UserProfile.jsp", null, message);
+        return new ModelAndView("UserProfile", "model", message);
     }
 
 }

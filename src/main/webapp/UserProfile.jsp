@@ -10,7 +10,7 @@
 
 
     <div style="width:128px;height:128px;overflow:hidden;border:1px solid black;align-content:center" >
-        <img src="/images/avatar" alt="HTML5 Icon" style="max-width:100%;height:128px">
+        <img src="/images/avatar.jpg" alt="HTML5 Icon" style="max-width:100%;height:128px">
     </div>
     <br>
     <%@include file="UploadFile.jsp" %>
@@ -39,7 +39,7 @@
         }
     </script>
 
-    <c:set var="message" scope="session" value='<%= request.getAttribute("message") %>'/>
+    <c:set var="message" scope="session" value='<%= request.getAttribute("model") %>'/>
     <c:if test="${message != null}">
         <h4 style="color:red"><c:out value="${message}" /></h4>
     </c:if>
