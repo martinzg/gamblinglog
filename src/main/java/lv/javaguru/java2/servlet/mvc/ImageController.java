@@ -1,42 +1,56 @@
 package lv.javaguru.java2.servlet.mvc;
 
+import lv.javaguru.java2.database.ImageDAO;
 import lv.javaguru.java2.database.UserDAO;
+import lv.javaguru.java2.domain.Image;
+import lv.javaguru.java2.resources.ConvertInputStreamToByteArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.util.Arrays;
 
-@Component
-public class ImageController implements MVCController {
+@Controller
+public class ImageController {
+
+    private Logger logger = LoggerFactory.getLogger(UserProfileController.class);
 
     @Autowired
     private UserDAO userDAO;
 
-    @Override
-    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
+    @Autowired
+    private ImageDAO imageDAO;
 
-        ServletContext context = req.getServletContext();
-        String filename = "C:\\Images\\" + checkUserImage(req) + ".png";
+    @RequestMapping(value = "image", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView processRequest(HttpServletRequest req, HttpServletResponse resp) {
+
+        Image image = imageDAO.getImageByUserId(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
+
+        ServletContext context= req.getServletContext();
+        String filename = image.getImageName();
         String mime = context.getMimeType(filename);
         if (mime == null) {
-                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                return new MVCModel("/Image.jsp", null, null);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            return new ModelAndView("Image", "image", null);
         }
-
         resp.setContentType(mime);
-        File file = new File(filename);
-        resp.setContentLength((int)file.length());
 
-        FileInputStream in;
+        byte[] bytesIn;
+        InputStream in;
         OutputStream out = null;
-        try {
-            in = new FileInputStream(file);
+
+        try{
+            bytesIn = ConvertInputStreamToByteArray.getBytesFromInputStream(image.getImage().getBinaryStream());
+            in = new ByteArrayInputStream(Arrays.copyOfRange(bytesIn, 147, bytesIn.length));
+
             out = resp.getOutputStream();
 
             byte[] buf = new byte[1024];
@@ -47,20 +61,13 @@ public class ImageController implements MVCController {
             out.close();
             in.close();
         }
-        catch (IOException e){
+        catch (Exception e){
+            logger.error("Error! Image output failed!");
             e.printStackTrace();
         }
-        return new MVCModel("/Image.jsp", out, null);
-    }
 
-    @Override
-    public MVCModel processRequestPost(HttpServletRequest req) {
-        return new MVCModel("/Image.jsp", null, null);
-    }
+        return new ModelAndView("Image", "image", out);
 
-    private Long checkUserImage (HttpServletRequest req){
-        Long userId = userDAO.getIdByEmail(req.getUserPrincipal().getName());
-        return userDAO.getById(userId).getImage() ? userId : 1000L;
     }
 
 }

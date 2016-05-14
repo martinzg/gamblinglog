@@ -10,7 +10,6 @@ public class UserCreator {
         user.setLastName(lastName);
         user.setEmail(email);
         user.setPassword(password);
-        user.setImage(false);
         return user;
     }
 

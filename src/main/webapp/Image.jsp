@@ -1,1 +1,1 @@
-<%request.getAttribute("data");%>
+<%request.getAttribute("image");%>

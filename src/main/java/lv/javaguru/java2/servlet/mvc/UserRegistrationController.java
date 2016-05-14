@@ -60,7 +60,6 @@ public class UserRegistrationController {
         user.setLastName(req.getParameter("lastname"));
         user.setEmail(req.getParameter("email"));
         user.setPassword(HashPassword.hashPassword(req));
-        user.setImage(false);
     }
 
 }

@@ -16,7 +16,6 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`users` (
   `LastName`  VARCHAR(32) NOT NULL,
   `Email`     VARCHAR(32) NOT NULL,
   `Password`  VARCHAR(32) NOT NULL,
-  `Image`     BOOL        NOT NULL,
   PRIMARY KEY (`UserID`)
 )
 ENGINE = InnoDB
@@ -51,6 +50,22 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`user_roles` (
   PRIMARY KEY (`ID`),
   CONSTRAINT UserRolesFK1 FOREIGN KEY (`UserID`) REFERENCES users(`UserID`),
   CONSTRAINT UserRolesFK2 FOREIGN KEY (`RoleID`) REFERENCES roles(`RoleID`)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1002;
+
+-- -----------------------------------------------------
+-- Table `Java2_test`.`user_images`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `java2_test`.`user_images` ;
+
+CREATE TABLE IF NOT EXISTS `java2_test`.`user_images` (
+  `ID`        BIGINT(11)  NOT NULL AUTO_INCREMENT,
+  `UserID`    BIGINT(11)  NOT NULL,
+  `ImageName` VARCHAR(255) NOT NULL,
+  `Image`     LONGBLOB,
+  PRIMARY KEY (`ID`),
+  CONSTRAINT UserImagesFK FOREIGN KEY (`UserID`) REFERENCES users(`UserID`)
 )
   ENGINE = InnoDB
   AUTO_INCREMENT = 1002;

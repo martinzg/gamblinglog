@@ -5,6 +5,8 @@ import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.resources.FileUpload;
 import lv.javaguru.java2.resources.HashPassword;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,8 @@ import javax.servlet.http.Part;
 
 @Controller
 public class UserProfileController {
+
+    private Logger logger = LoggerFactory.getLogger(UserProfileController.class);
 
     @Autowired
     private UserDAO userDAO;
@@ -57,12 +61,6 @@ public class UserProfileController {
         }
     }
 
-    private void setUserPictureTrue (HttpServletRequest req){
-        User user = userDAO.getById(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
-        user.setImage(true);
-        userDAO.update(user);
-    }
-
     private ModelAndView verifyAndUploadFile (HttpServletRequest req){
         String message;
         try{
@@ -70,7 +68,6 @@ public class UserProfileController {
             if (part.getSize() > 0){
                 if (fileUpload.uploadFile(req)) {
                     message = "Image uploaded successfully!";
-                    setUserPictureTrue(req);
                 }
                 else {
                     message = "File is not an image (.jpg, .png, .gif)!";
@@ -82,6 +79,7 @@ public class UserProfileController {
         }
         catch (Exception e){
             e.printStackTrace();
+            logger.error("Error! Image upload failed!");
             message = "Image upload failed!";
         }
         return new ModelAndView("UserProfile", "model", message);
