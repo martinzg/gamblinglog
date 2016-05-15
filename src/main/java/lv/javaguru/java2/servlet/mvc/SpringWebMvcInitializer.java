@@ -27,6 +27,7 @@ public class SpringWebMvcInitializer extends AbstractDispatcherServletInitialize
                             "/logout",
                             "/registration",
                             "/forgotpassword",
+                            "/changepassword",
                             "/userprofile",
                             "/image",
                             "/deleteuser",

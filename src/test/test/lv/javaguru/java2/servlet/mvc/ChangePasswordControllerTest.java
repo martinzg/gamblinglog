@@ -4,17 +4,18 @@ import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.servlet.mvc.ChangePasswordController;
-import lv.javaguru.java2.servlet.mvc.MVCModel;
 import lv.javaguru.java2.servlet.mvc.SpringAppConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import static org.junit.Assert.*;
@@ -23,16 +24,17 @@ import static org.mockito.Mockito.mock;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfig.class)
+@WebAppConfiguration
 
 public class ChangePasswordControllerTest {
 
-    @Autowired
-    private ChangePasswordController changePasswordController;
+    private ChangePasswordController changePasswordController = new ChangePasswordController();
 
     private String password = "password";
 
     @Mock
     HttpServletRequest req = mock(HttpServletRequest.class);
+    HttpServletResponse resp = mock(HttpServletResponse.class);
     HttpSession session = mock(HttpSession.class);
     UserDAO userDAO = mock(UserDAO.class);
     User user = mock(User.class);
@@ -52,10 +54,9 @@ public class ChangePasswordControllerTest {
         doReturn(1002L).when(session).getAttribute("userId");
         doReturn(user).when(userDAO).getById(1002L);
 
-        MVCModel mvcModel = changePasswordController.processRequestPost(req);
-        assertEquals("/Redirect.jsp", mvcModel.getJspName());
-        assertEquals("/login", mvcModel.getData());
-        assertNull(mvcModel.getMessage());
+        ModelAndView modelAndView = changePasswordController.processPostRequest(req, resp);
+        assertEquals("Redirect", modelAndView.getViewName());
+        assertEquals("{model=/login}", modelAndView.getModel().toString());
     }
 
     @Test
@@ -65,10 +66,9 @@ public class ChangePasswordControllerTest {
         doReturn("1").when(session).getId();
         doReturn("1").when(req).getParameter("link");
 
-        MVCModel mvcModel = changePasswordController.processRequestPost(req);
-        assertEquals("/ChangePassword.jsp", mvcModel.getJspName());
-        assertNull(mvcModel.getData());
-        assertEquals("'New Password' and 'Confirm New Password' do not match!", mvcModel.getMessage());
+        ModelAndView modelAndView = changePasswordController.processPostRequest(req, resp);
+        assertEquals("ChangePassword", modelAndView.getViewName());
+        assertEquals("{model='New Password' and 'Confirm New Password' do not match!}", modelAndView.getModel().toString());
     }
 
     @Test
@@ -76,10 +76,9 @@ public class ChangePasswordControllerTest {
         doReturn("1").when(session).getId();
         doReturn("2").when(req).getParameter("link");
 
-        MVCModel mvcModel = changePasswordController.processRequestPost(req);
-        assertEquals("/ChangePassword.jsp", mvcModel.getJspName());
-        assertNull(mvcModel.getData());
-        assertEquals("Your password reset link has expired!", mvcModel.getMessage());
+        ModelAndView modelAndView = changePasswordController.processPostRequest(req, resp);
+        assertEquals("ChangePassword", modelAndView.getViewName());
+        assertEquals("{model=Your password reset link has expired!}", modelAndView.getModel().toString());
     }
 
 }

@@ -5,14 +5,17 @@ import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.resources.HashPassword;
 import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@Component
-public class ChangePasswordController implements MVCController{
+@Controller
+public class ChangePasswordController {
 
     @Autowired
     private UserDAO userDAO;
@@ -21,32 +24,32 @@ public class ChangePasswordController implements MVCController{
         this.userDAO = userDAO;
     }
 
-    @Override
-    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
-        return new MVCModel("/ChangePassword.jsp", null, null);
+    @RequestMapping(value = "changepassword", method = {RequestMethod.GET})
+    public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("ChangePassword", "model", null);
     }
 
-    @Override
-    public MVCModel processRequestPost(HttpServletRequest req) {
+    @RequestMapping(value = "changepassword", method = {RequestMethod.POST})
+    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        HttpSession session = req.getSession();
+        HttpSession session = request.getSession();
 
         try {
-            if (session.getId().equals(req.getParameter("link"))){
-                if (req.getParameter("password").equals(req.getParameter("confirm password"))){
+            if (session.getId().equals(request.getParameter("link"))){
+                if (request.getParameter("password").equals(request.getParameter("confirm password"))){
                     Long userId = Long.parseLong(session.getAttribute("userId").toString());
                     User user = userDAO.getById(userId);
-                    user.setPassword(HashPassword.hashPassword(req));
+                    user.setPassword(HashPassword.hashPassword(request));
                     userDAO.update(user);
                     session.setAttribute("messageSuccess", "Your password has been successfully changed!");
-                    return new MVCModel("/Redirect.jsp", "/login", null);
+                    return new ModelAndView("Redirect", "model", "/login");
                 }
                 else {
-                    return new MVCModel("/ChangePassword.jsp", null, "'New Password' and 'Confirm New Password' do not match!");
+                    return new ModelAndView("ChangePassword", "model", "'New Password' and 'Confirm New Password' do not match!");
                 }
             }
             else {
-                return new MVCModel("/ChangePassword.jsp", null, "Your password reset link has expired!");
+                return new ModelAndView("ChangePassword", "model", "Your password reset link has expired!");
             }
         }
         catch (JDBCException e) {
