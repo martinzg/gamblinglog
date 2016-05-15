@@ -4,14 +4,17 @@ import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.SendEmailFromGmail;
 import org.hibernate.JDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@Component
-public class ForgotPasswordController implements MVCController{
+@Controller
+public class ForgotPasswordController {
 
     @Autowired
     private UserDAO userDAO;
@@ -20,25 +23,25 @@ public class ForgotPasswordController implements MVCController{
         this.userDAO = userDAO;
     }
 
-    @Override
-    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
-        return new MVCModel("/ForgotPassword.jsp", null, null);
+    @RequestMapping(value = "forgotpassword", method = {RequestMethod.GET})
+    public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
+        return new ModelAndView("ForgotPassword", "model", null);
     }
 
-    @Override
-    public MVCModel processRequestPost(HttpServletRequest req) {
+    @RequestMapping(value = "forgotpassword", method = {RequestMethod.POST})
+    public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
 
-        HttpSession session = req.getSession();
+        HttpSession session = request.getSession();
 
         try {
-            Long userId = userDAO.getIdByEmail(req.getParameter("email"));
+            Long userId = userDAO.getIdByEmail(request.getParameter("email"));
             if (userId == null){
-                return new MVCModel("/ForgotPassword.jsp", null, "There is no user with such Email!");
+                return new ModelAndView("ForgotPassword", "model", "There is no user with such Email!");
             }
             else {
                 session.setAttribute("userId", userId);
-                sendEmail(req.getParameter("email"), "http://localhost:8080/changepassword?link=" + session.getId());
-                return new MVCModel("/ForgotPassword.jsp", null, "Password reset link has been sent to your email!");
+                sendEmail(request.getParameter("email"), "http://localhost:8080/changepassword?link=" + session.getId());
+                return new ModelAndView("ForgotPassword", "model", "Password reset link has been sent to your email!");
             }
         }
         catch (JDBCException e) {
