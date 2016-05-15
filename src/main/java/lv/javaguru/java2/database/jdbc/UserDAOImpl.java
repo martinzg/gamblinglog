@@ -98,7 +98,7 @@ public class UserDAOImpl extends GenericHibernateDAOImpl<User> implements UserDA
     }
 
     private String getDefaultImageName (){
-        URL url = UserDAOImpl.class.getResource("/images/1000.png");
+        URL url = UserDAOImpl.class.getResource("/images/defaultGamblingLogImage.png");
         String filename = "";
         for (String item : url.toString().split("/")){
             filename = item;
@@ -107,7 +107,7 @@ public class UserDAOImpl extends GenericHibernateDAOImpl<User> implements UserDA
     }
 
     private Blob getDefaultImageAsBlob () throws IOException, SQLException {
-        InputStream inputStream = UserDAOImpl.class.getResourceAsStream("/images/1000.png");
+        InputStream inputStream = UserDAOImpl.class.getResourceAsStream("/images/defaultGamblingLogImage.png");
         return new javax.sql.rowset.serial.SerialBlob(ConvertInputStreamToByteArray.getBytesFromInputStream(inputStream));
     }
 

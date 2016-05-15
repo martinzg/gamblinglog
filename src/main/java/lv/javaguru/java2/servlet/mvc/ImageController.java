@@ -49,8 +49,8 @@ public class ImageController {
 
         try{
             bytesIn = ConvertInputStreamToByteArray.getBytesFromInputStream(image.getImage().getBinaryStream());
-            in = new ByteArrayInputStream(Arrays.copyOfRange(bytesIn, 147, bytesIn.length));
 
+            in = cropIfDefaultImage(bytesIn, filename);
             out = resp.getOutputStream();
 
             byte[] buf = new byte[1024];
@@ -68,6 +68,13 @@ public class ImageController {
 
         return new ModelAndView("Image", "image", out);
 
+    }
+
+    private InputStream cropIfDefaultImage (byte[] bytes, String filename){
+        if (filename.equalsIgnoreCase("defaultGamblingLogImage.png")){
+            return new ByteArrayInputStream(Arrays.copyOfRange(bytes, 147, bytes.length));
+        }
+        return new ByteArrayInputStream(bytes);
     }
 
 }

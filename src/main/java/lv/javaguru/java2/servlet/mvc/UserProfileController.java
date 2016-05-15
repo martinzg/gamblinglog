@@ -70,7 +70,7 @@ public class UserProfileController {
                     message = "Image uploaded successfully!";
                 }
                 else {
-                    message = "File is not an image (.jpg, .png, .gif)!";
+                    message = "File is not an image (.jpg, .png, .gif, .bmp)!";
                 }
             }
             else {

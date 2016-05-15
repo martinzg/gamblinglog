@@ -55,7 +55,7 @@ public class ImageDAOImplTest {
     public void testGetImageByUserId() throws Exception {
         Image image = imageDAO.getImageByUserId(userDAO.getIdByEmail(email));
         assertNotNull(image);
-        assertEquals("1000.png", image.getImageName());
+        assertEquals("defaultGamblingLogImage.png", image.getImageName());
         assertEquals(getResourceImageAsBlob().length(), image.getImage().length() - 148);
     }
 
@@ -65,7 +65,7 @@ public class ImageDAOImplTest {
     }
 
     private Blob getResourceImageAsBlob () throws IOException, SQLException {
-        InputStream inputStream = ImageDAOImplTest.class.getResourceAsStream("/images/1000.png");
+        InputStream inputStream = ImageDAOImplTest.class.getResourceAsStream("/images/defaultGamblingLogImage.png");
         return new javax.sql.rowset.serial.SerialBlob(ConvertInputStreamToByteArray.getBytesFromInputStream(inputStream));
     }
 

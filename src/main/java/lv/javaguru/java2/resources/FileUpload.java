@@ -11,10 +11,9 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.*;
-import java.sql.Blob;
 
 @Component
-@MultipartConfig //(location="C:\\Images", fileSizeThreshold=1024*1024, maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
+@MultipartConfig
 public class FileUpload {
 
     @Autowired
@@ -25,54 +24,27 @@ public class FileUpload {
 
     public Boolean uploadFile (HttpServletRequest req) throws IOException, ServletException{
 
-        //final String destination = "C:\\Images\\";
+        Image image = imageDAO.getImageByUserId(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
+
         final Part filePart = req.getPart("file");
         if (!isImageFile(req, getInputFileName(filePart))){
             return false;
         }
-        //final String fileName = userDAO.getIdByEmail(req.getUserPrincipal().getName()).toString() + ".png";
 
-        //OutputStream out = null;
-        InputStream fileContent = null;
-        Blob blob = null;
+        InputStream inputStream = null;
 
         try {
-            //out = new FileOutputStream(new File(destination + File.separator + fileName));
-
-            fileContent = filePart.getInputStream();
-            //byte[] bytes = getBytesFromInputStream(fileContent);
-
-
-            try{
-                blob = new javax.sql.rowset.serial.SerialBlob(ConvertInputStreamToByteArray.getBytesFromInputStream(fileContent));
-            }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-
-
-            Image image = new Image();
-            image.setUserId(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
-            //image.setImage(blob);
-
+            inputStream = filePart.getInputStream();
+            image.setImageName(getInputFileName(filePart));
+            image.setImage(new javax.sql.rowset.serial.SerialBlob(ConvertInputStreamToByteArray.getBytesFromInputStream(inputStream)));
             imageDAO.update(image);
-
-            /*int read;
-            final byte[] bytes = new byte[1024];
-
-            while ((read = fileContent.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }*/
             return true;
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return false;
         } finally {
-            /*if (out != null) {
-                out.close();
-            }*/
-            if (fileContent != null) {
-                fileContent.close();
+            if (inputStream != null) {
+                inputStream.close();
             }
         }
 
@@ -80,7 +52,11 @@ public class FileUpload {
 
     private Boolean isImageFile (HttpServletRequest req, String inputFilename){
         String mime = req.getServletContext().getMimeType(inputFilename);
-        return (mime.equalsIgnoreCase("image/gif"))|(mime.equalsIgnoreCase("image/png"))|(mime.equalsIgnoreCase("image/jpg"))|(mime.equalsIgnoreCase("image/jpeg"));
+        return (mime.equalsIgnoreCase("image/bmp"))|
+                (mime.equalsIgnoreCase("image/gif"))|
+                (mime.equalsIgnoreCase("image/png"))|
+                (mime.equalsIgnoreCase("image/jpg"))|
+                (mime.equalsIgnoreCase("image/jpeg"));
     }
 
     private String getInputFileName(final Part part) {
