@@ -9,7 +9,7 @@
 </head>
 <body>
 	<%@include file="Menu.jsp" %>
-    <% OfflineGamblingEventData data = (OfflineGamblingEventData) request.getAttribute("data"); %>
+    <% OfflineGamblingEventData data = (OfflineGamblingEventData) request.getAttribute("model"); %>
     <% if (data.getMessage() != null) { %>
     <%= "<h1>" + data.getMessage() + "</h1>"%>
     <% } %>

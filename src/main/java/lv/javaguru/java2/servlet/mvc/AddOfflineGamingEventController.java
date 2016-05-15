@@ -1,6 +1,5 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.database.jdbc.GamblingEventDAOImpl;
 import lv.javaguru.java2.database.jdbc.LandBasedCasinoDAOImpl;
@@ -11,15 +10,18 @@ import org.hibernate.JDBCException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static java.sql.Date.*;
 
-@Component
-public class AddOfflineGamingEventController implements MVCController {
+@Controller
+public class AddOfflineGamingEventController {
 
     private Logger logger = LoggerFactory.getLogger(AddOfflineGamingEventController.class);
 
@@ -38,15 +40,15 @@ public class AddOfflineGamingEventController implements MVCController {
         return data;
     }
 
-    @Override
-    public MVCModel processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
+    @RequestMapping(value = "addlandbasedgamblingevent", method = {RequestMethod.GET})
+    public ModelAndView processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
         OfflineGamblingEventData data = new OfflineGamblingEventData();
         addDefaultInformation(data);
-        return new MVCModel("/AddOfflineGamblingEvent.jsp", data, null);
+        return new ModelAndView("AddOfflineGamblingEvent", "model", data);
     }
 
-    @Override
-    public MVCModel processRequestPost(HttpServletRequest req) {
+    @RequestMapping(value = "addlandbasedgamblingevent", method = {RequestMethod.POST})
+    public ModelAndView processRequestPost(HttpServletRequest req) {
         OfflineGamblingEvent event = new OfflineGamblingEvent();
         OfflineGamblingEventData data = new OfflineGamblingEventData();
         event.setPlaceId(Long.parseLong(req.getParameter("casino")));
@@ -61,6 +63,6 @@ public class AddOfflineGamingEventController implements MVCController {
         event.setComment(req.getParameter("comment"));
         data.setMessage("Event added, add more?");
         addDefaultInformation(data);
-        return new MVCModel("/AddOfflineGamblingEvent.jsp", data, null);
+        return new ModelAndView("AddOfflineGamblingEvent", "model", data);
     }
 }
