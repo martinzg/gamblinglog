@@ -14,9 +14,9 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.web.servlet.ModelAndView;
 
 import lv.javaguru.java2.servlet.mvc.GamblingSiteAddController;
-import lv.javaguru.java2.servlet.mvc.MVCModel;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = SpringAppConfigTest.class)
@@ -39,9 +39,9 @@ public class GamblingSiteAddControllerTest {
 		Mockito.when(userPrincipal.getName()).thenReturn("bla@bla.lv");
 		Mockito.when(req.getUserPrincipal()).thenReturn(userPrincipal);
     	
-    	MVCModel mvcModel = siteAddController.processRequestPost(req);
-    	assertEquals("/GamblingSiteAdd.jsp", mvcModel.getJspName());
-		assertEquals("Success!", mvcModel.getMessage());
+		ModelAndView modelAndView = siteAddController.processRequestPost(req);
+		assertEquals("GamblingSiteAdd", modelAndView.getViewName());
+		assertEquals("Success!", modelAndView.getModel().get("message"));
     }
 
 	@Test
@@ -51,17 +51,17 @@ public class GamblingSiteAddControllerTest {
 		Mockito.when(req.getParameter("siteURL")).thenReturn("www.sonya.lv");
 		Mockito.when(req.getParameter("siteDescription")).thenReturn("bla bla bla");
 
-		MVCModel mvcModel = siteAddController.processRequestPost(req);
-		assertEquals("/GamblingSiteAdd.jsp", mvcModel.getJspName());
-		assertEquals("Failure!", mvcModel.getMessage());
+		ModelAndView modelAndView = siteAddController.processRequestPost(req);
+		assertEquals("GamblingSiteAdd", modelAndView.getViewName());
+		assertEquals("Failure!", modelAndView.getModel().get("message"));
 	}
 
 	@Test
 	public void testSiteAddRedirect() throws Exception {
 		Mockito.when(req.getParameter("back")).thenReturn(new String());
 
-		MVCModel mvcModel = siteAddController.processRequestPost(req);
-		assertEquals("/Redirect.jsp", mvcModel.getJspName());
-		assertEquals("/gamblingsites", mvcModel.getData());
+		ModelAndView modelAndView = siteAddController.processRequestPost(req);
+		assertEquals("Redirect", modelAndView.getViewName());
+		assertEquals("/gamblingsites", modelAndView.getModel().get("model"));
 	}
 }
