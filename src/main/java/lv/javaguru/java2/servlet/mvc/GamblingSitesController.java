@@ -36,6 +36,9 @@ public class GamblingSitesController {
         if (req.getParameter("add site") != null) {
 			return new ModelAndView("Redirect", "model", "/gambling-site-add");
         }
+		if (req.getParameter("add review") != null) {
+			return new ModelAndView("Redirect", "model", "/gambling-site-review");
+		}
         else {
 			String siteIdsParameter = req.getParameter("siteIds");
 			if (siteIdsParameter != null && !siteIdsParameter.isEmpty()) {

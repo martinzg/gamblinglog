@@ -75,6 +75,9 @@
                     <td width="150px">${site.name}</td>
                     <td width="150px">${site.URL}</td>
                     <td width="150px">${site.description}</td>
+                    <td><form method="post">
+                    <input type="submit" name="add review" value="Add Review">
+                </form></td>
                 </tr>
             </c:forEach>
         </c:if>

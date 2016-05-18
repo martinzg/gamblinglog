@@ -111,6 +111,23 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 1002;
 
 -- -----------------------------------------------------
+-- Table `Java2_test`.`reviews`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `java2_test`.`reviews` ;
+
+CREATE TABLE IF NOT EXISTS `java2_test`.`reviews` (
+  `ID`           BIGINT(11)   NOT NULL AUTO_INCREMENT,
+  `ReviewTitle`  VARCHAR(50)  NOT NULL,
+  `ReviewText`   VARCHAR(255) NOT NULL,
+  `ReviewRating` INT(255)     NOT NULL,
+  `UserID`      BIGINT(11)    NOT NULL,
+  PRIMARY KEY (`ID`),
+  CONSTRAINT SiteReviewFK FOREIGN KEY (`ID`) REFERENCES sites (`ID`)
+)
+ENGINE = InnoDB
+AUTO_INCREMENT = 1002;
+
+-- -----------------------------------------------------
 -- Offline gaming event
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `java2_test`.`offlineGamingEvent` ;
