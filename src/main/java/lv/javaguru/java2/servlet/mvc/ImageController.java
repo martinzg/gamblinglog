@@ -4,6 +4,7 @@ import lv.javaguru.java2.database.ImageDAO;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.Image;
 import lv.javaguru.java2.resources.ConvertInputStreamToByteArray;
+import lv.javaguru.java2.resources.SetHeaderNoCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class ImageController {
 
     @RequestMapping(value = "image", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView processRequest(HttpServletRequest req, HttpServletResponse resp) {
+
+        SetHeaderNoCache.setNoCache(resp);
 
         Image image = imageDAO.getImageByUserId(userDAO.getIdByEmail(req.getUserPrincipal().getName()));
 

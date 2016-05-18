@@ -1,6 +1,7 @@
 package lv.javaguru.java2.servlet.mvc;
 
 import lv.javaguru.java2.database.UserDAO;
+import lv.javaguru.java2.resources.SetHeaderNoCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +19,7 @@ public class DeleteUserController {
 
     @RequestMapping(value = "deleteuser", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView processRequest(HttpServletRequest req, HttpServletResponse resp) {
+        SetHeaderNoCache.setNoCache(resp);
         String userEmail = req.getUserPrincipal().getName();
         req.getSession().invalidate();
         userDAO.delete(userDAO.getIdByEmail(userEmail));

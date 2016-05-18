@@ -5,6 +5,7 @@ import lv.javaguru.java2.domain.User;
 import lv.javaguru.java2.resources.FileUpload;
 import lv.javaguru.java2.resources.HashPassword;
 
+import lv.javaguru.java2.resources.SetHeaderNoCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +31,13 @@ public class UserProfileController {
 
     @RequestMapping(value = "userprofile", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
+        SetHeaderNoCache.setNoCache(response);
         return new ModelAndView("UserProfile", "model", null);
     }
 
     @RequestMapping(value = "userprofile", method = {RequestMethod.POST})
     public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
+        SetHeaderNoCache.setNoCache(response);
         if (request.getParameter("edit") != null){
             User user = userDAO.getById(userDAO.getIdByEmail(request.getUserPrincipal().getName()));
             return new ModelAndView("UserProfile", "user", user);
