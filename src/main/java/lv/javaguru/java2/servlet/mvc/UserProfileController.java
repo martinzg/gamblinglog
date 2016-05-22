@@ -68,7 +68,7 @@ public class UserProfileController {
         String message;
         try{
             Part part = req.getPart("file");
-            if (part.getSize() > 0){
+            if (part.getSize() > 0 && part.getSize() < 4000000){
                 if (fileUpload.uploadFile(req)) {
                     message = "Image uploaded successfully!";
                 }
@@ -77,7 +77,12 @@ public class UserProfileController {
                 }
             }
             else {
-                message = "Please select file for upload!";
+                if (part.getSize() <= 0){
+                    message = "Please select file for upload!";
+                }
+                else {
+                    message = "File is to large! Max file size = 4 Mb";
+                }
             }
         }
         catch (Exception e){
