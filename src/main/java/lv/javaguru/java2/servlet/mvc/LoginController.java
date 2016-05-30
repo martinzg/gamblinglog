@@ -12,8 +12,26 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 public class LoginController {
 
-    @RequestMapping(value = "login", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView processRequest(HttpServletRequest req, HttpServletResponse resp) {
+    @RequestMapping(value = "/", method = {RequestMethod.GET})
+    public ModelAndView processGetRootRequest(HttpServletRequest req, HttpServletResponse resp) {
+        SetHeaderNoCache.setNoCache(resp);
+        return new ModelAndView("Redirect", "model", "/userprofile");
+    }
+
+    @RequestMapping(value = "login", method = {RequestMethod.GET})
+    public ModelAndView processGetRequest(HttpServletRequest req, HttpServletResponse resp) {
+        SetHeaderNoCache.setNoCache(resp);
+        return new ModelAndView("Redirect", "model", "/userprofile");
+    }
+
+    @RequestMapping(value = "/", method = {RequestMethod.POST})
+    public ModelAndView processPostRootRequest(HttpServletRequest req, HttpServletResponse resp) {
+        SetHeaderNoCache.setNoCache(resp);
+        return new ModelAndView("Redirect", "model", "/userprofile");
+    }
+
+    @RequestMapping(value = "login", method = {RequestMethod.POST})
+    public ModelAndView processPostRequest(HttpServletRequest req, HttpServletResponse resp) {
         SetHeaderNoCache.setNoCache(resp);
         return new ModelAndView("Redirect", "model", "/userprofile");
     }

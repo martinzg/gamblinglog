@@ -4,13 +4,14 @@
 <table width="100%">
     <tr>
         <td>
-            <a href="userprofile">User Profile</a> |
-            <a href="gamblingsites">Gambling Sites</a> |
-            <a href="addlandbasedgamblingevent">Add Offline Gambling Event</a> |
-            <a href="stakes">My Stakes</a>
+            <a href="/userprofile">User Profile</a> |
+            <a href="/messages">Messages</a> |
+            <a href="/gamblingsites">Gambling Sites</a> |
+            <a href="/addlandbasedgamblingevent">Add Offline Gambling Event</a> |
+            <a href="/stakes">My Stakes</a>
         </td>
         <td align="right">
-            <a href="logout">Log Out</a>
+            <a href="/logout">Log Out</a>
         </td>
     </tr>
 </table>
