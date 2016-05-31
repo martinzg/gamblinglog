@@ -71,6 +71,22 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`user_images` (
   AUTO_INCREMENT = 1002;
 
 -- -----------------------------------------------------
+-- Table `Java2_test`.`user_messages`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `java2_test`.`user_messages` ;
+
+CREATE TABLE IF NOT EXISTS `java2_test`.`user_messages` (
+  `ID`        BIGINT(11)    NOT NULL AUTO_INCREMENT,
+  `UserFrom`  VARCHAR(32)   NOT NULL,
+  `UserTo`    VARCHAR(32)   NOT NULL,
+  `Timestamp` DATETIME      NOT NULL,
+  `Message`   VARCHAR(255)  NOT NULL,
+  PRIMARY KEY (`ID`)
+)
+  ENGINE = InnoDB
+  AUTO_INCREMENT = 1002;
+
+-- -----------------------------------------------------
 -- Table `Java2_test`.`stakes`
 -- -----------------------------------------------------
 

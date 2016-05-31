@@ -30,7 +30,7 @@ public class LoginControllerTest {
 
     @Test
     public void testSuccessfulLogin() throws Exception {
-        ModelAndView modelAndView = loginController.processRequest(req, resp);
+        ModelAndView modelAndView = loginController.processGetRequest(req, resp);
         assertEquals("Redirect", modelAndView.getViewName());
         assertEquals("{model=/userprofile}", modelAndView.getModel().toString());
     }
