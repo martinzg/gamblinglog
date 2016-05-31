@@ -72,7 +72,7 @@
             <c:forEach var="site" items="${gamblingSiteList}">
                 <tr>
                 	<td><input type="checkbox" class="select-one" value="${site.id}"></td>
-                    <td width="150px">${site.name}</td>
+                    <td width="150px"><a href="gamblingsitereviews/${site.id}" >${site.name}</a></td>
                     <td width="150px">${site.URL}</td>
                     <td width="150px">${site.description}</td>
                     <td><form method="post">

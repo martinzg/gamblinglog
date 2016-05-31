@@ -15,7 +15,7 @@ import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.GamblingSiteReview;
 
 @Controller
-public class GamblingSiteReviewController {
+public class GamblingSiteReviewAddController {
 
 	@Autowired
 	private UserDAO userDAO;
@@ -23,12 +23,12 @@ public class GamblingSiteReviewController {
 	@Autowired
 	private GamblingSiteReviewDAO siteReviewDAO;
 
-	@RequestMapping(value = "gambling-site-review", method = { RequestMethod.GET })
-	public ModelAndView processRequestGet(HttpServletRequest req, HttpServletResponse resp) {
+	@RequestMapping(value = "gambling-site-review/{siteId}", method = { RequestMethod.GET })
+	public ModelAndView processRequestGet(long siteId, HttpServletRequest req, HttpServletResponse resp) {
 		return new ModelAndView("GamblingSiteReview", "model", null);
 	}
 
-	@RequestMapping(value = "gambling-site-review", method = { RequestMethod.POST })
+	@RequestMapping(value = "gambling-site-review/{siteId}", method = { RequestMethod.POST })
 	public ModelAndView processRequestPost(HttpServletRequest request) {
 		if (request.getParameter("back") != null) {
 			return new ModelAndView("Redirect", "model", "/gamblingsites");

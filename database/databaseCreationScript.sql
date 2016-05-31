@@ -121,8 +121,9 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`reviews` (
   `ReviewText`   VARCHAR(255) NOT NULL,
   `ReviewRating` INT(255)     NOT NULL,
   `UserID`      BIGINT(11)    NOT NULL,
+  `SiteID`		BIGINT(11)    NOT NULL,
   PRIMARY KEY (`ID`),
-  CONSTRAINT SiteReviewFK FOREIGN KEY (`ID`) REFERENCES sites (`ID`)
+  CONSTRAINT SiteReviewFK FOREIGN KEY (`SiteID`) REFERENCES sites (`ID`)
 )
 ENGINE = InnoDB
 AUTO_INCREMENT = 1002;

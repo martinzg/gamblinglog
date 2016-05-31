@@ -28,6 +28,14 @@ public class GamblingSiteReviewDAOImpl extends GenericHibernateDAOImpl<GamblingS
 		return criteria.list();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Transactional
+	@Override
+	public List<GamblingSiteReview> getAllReviewsBySiteId(Long gamblingSiteId) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(persistentClass);
+		criteria.add(Restrictions.eq("siteId", gamblingSiteId));
+		return criteria.list();
+	}
 
 
 }

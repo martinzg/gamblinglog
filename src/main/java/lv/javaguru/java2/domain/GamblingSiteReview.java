@@ -30,6 +30,9 @@ public class GamblingSiteReview {
 	@Column(name = "UserID", nullable = false)
 	private Long userId;
 
+	@Column(name = "SiteID", nullable = false)
+	private Long siteId;
+
 	public Long getId() {
 		return id;
 	}

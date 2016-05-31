@@ -8,4 +8,6 @@ public interface GamblingSiteReviewDAO extends GenericDAO<GamblingSiteReview> {
 
 	List<GamblingSiteReview> getAllReviewsByUserId(Long id);
 
+	List<GamblingSiteReview> getAllReviewsBySiteId(Long gamblingSiteId);
+
 }
