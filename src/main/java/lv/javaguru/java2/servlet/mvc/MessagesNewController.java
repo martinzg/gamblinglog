@@ -15,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class MessagesNewController {
@@ -27,10 +29,19 @@ public class MessagesNewController {
     @Autowired
     private UserMessageDAO messageDAO;
 
+    public void setUserDAO (UserDAO userDAO){
+        this.userDAO = userDAO;
+    }
+
+    public void setUserMessageDAO (UserMessageDAO userMessageDAO){
+        this.messageDAO = userMessageDAO;
+    }
+
     @RequestMapping(value = "messages/newmessage", method = {RequestMethod.GET})
     public ModelAndView processGetRequest(HttpServletRequest request, HttpServletResponse response) {
         SetHeaderNoCache.setNoCache(response);
-        return new ModelAndView("MessagesNew", "model", null);
+        int count = messageDAO.getUnreadMessageCountByUserNameTo(request.getUserPrincipal().getName());
+        return new ModelAndView("MessagesNew", "count", count);
     }
 
     @RequestMapping(value = "messages/newmessage", method = {RequestMethod.POST})
@@ -41,19 +52,25 @@ public class MessagesNewController {
             String recipient = request.getParameter("recipient");
             String comment = request.getParameter("comment");
             if (userDAO.getIdByEmail(recipient) != null && !recipient.equals(request.getUserPrincipal().getName())){
-                if (comment.length() <= 255){
+                if (comment.length() <= 1000){
                     messageDAO.create(createMessageFromInputs(request));
                     message = "Message sent!";
                 }
                 else {
-                    message = "Message too long! Message can't be longer that 255 chars.";
+                    message = "Message too long! Message can't be longer that 1000 chars.";
                 }
             }
             else {
                 message = "Wrong Recipient!";
             }
         }
-        return new ModelAndView("MessagesNew", "model", message);
+
+        int count = messageDAO.getUnreadMessageCountByUserNameTo(request.getUserPrincipal().getName());
+        Map<String, Object> myModel = new HashMap<>();
+        myModel.put("count", count);
+        myModel.put("model", message);
+
+        return new ModelAndView("MessagesNew", myModel);
     }
 
     private UserMessage createMessageFromInputs (HttpServletRequest request){
@@ -62,6 +79,7 @@ public class MessagesNewController {
         userMessage.setUserTo(request.getParameter("recipient"));
         userMessage.setDateTime(new Date());
         userMessage.setMessage(request.getParameter("comment"));
+        userMessage.setReadState(false);
         return userMessage;
     }
 

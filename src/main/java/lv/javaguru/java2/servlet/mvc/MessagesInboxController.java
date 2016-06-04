@@ -14,7 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class MessagesInboxController {
@@ -27,15 +29,13 @@ public class MessagesInboxController {
     @RequestMapping(value = "messages", method = {RequestMethod.GET})
     public ModelAndView processGetAllRootRequest(HttpServletRequest request, HttpServletResponse response) {
         SetHeaderNoCache.setNoCache(response);
-        List<UserMessage> messageList = messageDAO.getMessagesByUserNameTo(request.getUserPrincipal().getName());
-        return new ModelAndView("MessagesInbox", "messageList", messageList);
+        return new ModelAndView("MessagesInbox", getMessageListAndUnreadCount(request));
     }
 
     @RequestMapping(value = "messages/inbox", method = {RequestMethod.GET})
     public ModelAndView processGetAllRequest(HttpServletRequest request, HttpServletResponse response) {
         SetHeaderNoCache.setNoCache(response);
-        List<UserMessage> messageList = messageDAO.getMessagesByUserNameTo(request.getUserPrincipal().getName());
-        return new ModelAndView("MessagesInbox", "messageList", messageList);
+        return new ModelAndView("MessagesInbox", getMessageListAndUnreadCount(request));
     }
 
     @RequestMapping(value = "messages/inbox/{id}", method = {RequestMethod.GET})
@@ -44,7 +44,15 @@ public class MessagesInboxController {
         UserMessage userMessage = messageDAO.getMessageById(id);
         if (userMessage != null){
             if (userMessage.getUserTo().equals(request.getUserPrincipal().getName())){
-                return new ModelAndView("MessagesInboxOne", "messageOne", userMessage);
+                userMessage.setReadState(true);
+                messageDAO.update(userMessage);
+                int count = messageDAO.getUnreadMessageCountByUserNameTo(request.getUserPrincipal().getName());
+
+                Map<String, Object> myModel = new HashMap<>();
+                myModel.put("count", count);
+                myModel.put("messageOne", userMessage);
+
+                return new ModelAndView("MessagesInboxOne", myModel);
             }
             else {
                 return new ModelAndView("Redirect", "model", "/messages/inbox");
@@ -59,6 +67,17 @@ public class MessagesInboxController {
     public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
         SetHeaderNoCache.setNoCache(response);
         return new ModelAndView("MessagesInbox", "model", null);
+    }
+
+    private Map<String, Object> getMessageListAndUnreadCount (HttpServletRequest request){
+        int count = messageDAO.getUnreadMessageCountByUserNameTo(request.getUserPrincipal().getName());
+        List<UserMessage> messageList = messageDAO.getMessagesByUserNameTo(request.getUserPrincipal().getName());
+
+        Map<String, Object> myModel = new HashMap<>();
+        myModel.put("count", count);
+        myModel.put("messageList", messageList);
+
+        return myModel;
     }
 
 }

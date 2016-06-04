@@ -80,7 +80,8 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`user_messages` (
   `UserFrom`  VARCHAR(32)   NOT NULL,
   `UserTo`    VARCHAR(32)   NOT NULL,
   `Timestamp` DATETIME      NOT NULL,
-  `Message`   VARCHAR(255)  NOT NULL,
+  `Message`   VARCHAR(4000)  NOT NULL,
+  `ReadState` BOOLEAN       NOT NULL,
   PRIMARY KEY (`ID`)
 )
   ENGINE = InnoDB

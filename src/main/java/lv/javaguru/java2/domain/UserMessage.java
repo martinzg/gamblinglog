@@ -24,6 +24,9 @@ public class UserMessage {
     @Column (name = "Message", nullable = false)
     private String message;
 
+    @Column (name = "ReadState", nullable = false)
+    private Boolean readState;
+
     public Long getId(){
         return id;
     }
@@ -62,6 +65,14 @@ public class UserMessage {
 
     public void setMessage(String message){
         this.message = message;
+    }
+
+    public Boolean getReadState(){
+        return readState;
+    }
+
+    public void setReadState(Boolean readState){
+        this.readState = readState;
     }
 
 }

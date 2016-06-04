@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
+    <META HTTP-EQUIV="refresh" CONTENT="45">
     <title>Messages Inbox</title>
 </head>
 <body>
@@ -12,6 +13,7 @@
 
     <table border="1">
         <tr>
+            <th><input type="checkbox" id="select-all" onClick="selectAll(this)"></th>
             <th>Time</th>
             <th>From</th>
             <th>Message</th>
@@ -19,11 +21,19 @@
         <c:set var="messageList" scope="session" value='<%= request.getAttribute("messageList") %>'/>
         <c:if test="${not empty messageList}">
             <c:forEach var="userMessage" items="${messageList}">
-                <tr onclick="return messageLink('/messages/inbox/${userMessage.id}')" style="cursor: pointer;">
-                    <td width="200px">${userMessage.dateTime}</td>
-                    <td width="200px">${userMessage.userFrom}</td>
-                    <td width="200px"><div style="width:100px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">${userMessage.message}</div></td>
+
+                <c:set var="backColor" scope="session" value="white"/>
+                <c:if test="${not userMessage.readState}">
+                    <c:set var="backColor" scope="session" value="90ee90"/>
+                </c:if>
+
+                <tr bgcolor="${backColor}">
+                    <td><input type="checkbox" name="select-one" value="${userMessage.id}" onClick="selectOne()"></td>
+                    <td width="200px" onclick="return messageLink('/messages/inbox/${userMessage.id}')" style="cursor: pointer;">${userMessage.dateTime}</td>
+                    <td width="200px" onclick="return messageLink('/messages/inbox/${userMessage.id}')" style="cursor: pointer;">${userMessage.userFrom}</td>
+                    <td width="200px" onclick="return messageLink('/messages/inbox/${userMessage.id}')" style="cursor: pointer;"><div style="width:100px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis">${userMessage.message}</div></td>
                 </tr>
+
             </c:forEach>
         </c:if>
     </table>
@@ -34,9 +44,36 @@
     </c:if>
 
     <script language="javascript" type="text/javascript">
+
         function messageLink(url) {
             location.href = url;
         }
+
+        function selectAll(source) {
+            checkboxes = document.getElementsByName('select-one');
+            for (var i=0; i<checkboxes.length; i++){
+                checkboxes[i].checked = source.checked;
+            }
+        }
+
+        function selectOne(){
+            checkboxes = document.getElementsByName("select-one");
+            var count = 0;
+            for (var i=0; i<checkboxes.length; i++){
+                if (!checkboxes[i].checked){
+                    document.getElementById("select-all").checked = false;
+                    return;
+                }
+                else {
+                    count++;
+                    if (count == checkboxes.length){
+                        document.getElementById("select-all").checked = true;
+                    }
+                }
+
+            }
+        }
+
     </script>
 
 </body>

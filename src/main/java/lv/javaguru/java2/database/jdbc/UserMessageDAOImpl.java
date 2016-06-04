@@ -7,6 +7,7 @@ import org.hibernate.*;
 import java.util.List;
 
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import org.springframework.stereotype.Component;
@@ -46,6 +47,16 @@ public class UserMessageDAOImpl extends GenericHibernateDAOImpl<UserMessage> imp
             return null;
         }
 
+    }
+
+    @SuppressWarnings("unchecked")
+    @Transactional
+    public int getUnreadMessageCountByUserNameTo(String userName) throws JDBCException {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(persistentClass);
+        criteria.setProjection(Projections.rowCount());
+        criteria.add(Restrictions.eq("userTo", userName));
+        criteria.add(Restrictions.eq("readState", false));
+        return Integer.valueOf(criteria.uniqueResult().toString());
     }
 
 }

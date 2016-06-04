@@ -12,4 +12,6 @@ public interface UserMessageDAO extends GenericDAO<UserMessage> {
 
     UserMessage getMessageById(Long id) throws JDBCException;
 
+    int getUnreadMessageCountByUserNameTo(String userName) throws JDBCException;
+
 }
