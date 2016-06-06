@@ -28,9 +28,21 @@
             </c:forEach>
         </c:if>
     </table>
-    <c:set var="message" scope="session" value='<%= request.getParameter("param") %>'/>
-    <c:if test="${message != null}">
-        <h4 style="color:red"><c:out value="${message}" /></h4>
+    <h1>Add review:</h1>
+    <form method="post">
+        Title:<br>
+        <input type="text" name="reviewTitle" required>
+        <br>
+        Review:<br>
+        <input type="text" name="reviewText" required>
+        <br>
+        Your rating:<br>
+        <input type="text" name="reviewRating" required>
+        <br><br>
+        <input type="submit" name="submit" value="Add">
+    </form>
+    <c:if test="${model.message != null}">
+        <h4 style="color:red"><c:out value="${model.message}" /></h4>
     </c:if>
 
 </body>
