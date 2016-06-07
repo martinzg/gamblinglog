@@ -10,14 +10,14 @@
 
     <%@include file="MessagesMenu.jsp" %>
 
-    <table border="1" width="602px">
+    <table border="1" width="620px" style="table-layout:fixed" align="left">
         <c:set var="messageOne" scope="session" value='<%= request.getAttribute("messageOne") %>'/>
         <c:if test="${messageOne != null}">
         <tr>
             <th align="left">Message from: ${messageOne.userFrom}</th>
         </tr>
             <tr>
-                <td><p>${messageOne.message}</p></td>
+                <td style="word-wrap: break-word;">${messageOne.message}</td>
             </tr>
         </c:if>
     </table>

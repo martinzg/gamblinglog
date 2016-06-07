@@ -66,7 +66,20 @@ public class MessagesInboxController {
     @RequestMapping(value = "messages/inbox", method = {RequestMethod.POST})
     public ModelAndView processPostRequest(HttpServletRequest request, HttpServletResponse response) {
         SetHeaderNoCache.setNoCache(response);
-        return new ModelAndView("MessagesInbox", "model", null);
+        String message = "";
+        String msgIds = request.getParameter("msgIds");
+
+        if(msgIds.length() > 0){
+            for (String item : msgIds.split(",")){
+                messageDAO.delete(Long.parseLong(item));
+            }
+            message = "Message(s) successfully deleted!";
+        }
+
+        Map<String, Object> myModel = getMessageListAndUnreadCount(request);
+        myModel.put("model", message);
+
+        return new ModelAndView("MessagesInbox", myModel);
     }
 
     private Map<String, Object> getMessageListAndUnreadCount (HttpServletRequest request){

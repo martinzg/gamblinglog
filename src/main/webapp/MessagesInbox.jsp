@@ -11,6 +11,8 @@
 
     <%@include file="MessagesMenu.jsp" %>
 
+    <button onclick="getSelected()">Delete</button>
+
     <table border="1">
         <tr>
             <th><input type="checkbox" id="select-all" onClick="selectAll(this)"></th>
@@ -72,6 +74,37 @@
                 }
 
             }
+        }
+
+        function getSelected(){
+            checkboxes = document.getElementsByName("select-one");
+            var ids = [];
+            var count = 0;
+            for (var i=0; i<checkboxes.length; i++){
+                if (checkboxes[i].checked){
+                    ids[count] = checkboxes[i].getAttribute("value");
+                    count++;
+                }
+            }
+            post("/messages/inbox", {msgIds: ids});
+        }
+
+        function post(path, params, method) {
+            method = method || "post";
+            var form = document.createElement("form");
+            form.setAttribute("method", method);
+            form.setAttribute("action", path);
+            for (var key in params) {
+                if (params.hasOwnProperty(key)) {
+                    var hiddenField = document.createElement("input");
+                    hiddenField.setAttribute("type", "hidden");
+                    hiddenField.setAttribute("name", key);
+                    hiddenField.setAttribute("value", params[key]);
+                    form.appendChild(hiddenField);
+                }
+            }
+            document.body.appendChild(form);
+            form.submit();
         }
 
     </script>
