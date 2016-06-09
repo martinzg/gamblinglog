@@ -27,7 +27,7 @@ public class StakeDAOImpl extends GenericHibernateDAOImpl<Stake> implements Stak
     @Transactional
     public List<Stake> getAllStakes(Long id) throws JDBCException {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(persistentClass);
-        criteria.add(Restrictions.eq("userID", id));
+        criteria.add(Restrictions.eq("userId", id));
         return criteria.list();
     }
 }

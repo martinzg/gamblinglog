@@ -39,6 +39,8 @@ public class Stake {
 
     @Column(name = "Comment", nullable = false)
     private String comment;
+
+    @Column(name = "UserID", nullable = false)
     private Long userId;
 
     public long getStakeID() {
