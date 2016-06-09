@@ -99,10 +99,10 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`stakes` (
   `URL`         VARCHAR(50)                   NOT NULL,
   `Event`       VARCHAR(50)                   NOT NULL,
   `BetType`    VARCHAR(50)                   NOT NULL,
-  `BetAmount`  FLOAT(10, 2)                  NOT NULL,
-  `Coefficient` FLOAT(8, 3)                   NOT NULL,
+  `BetAmount`  DOUBLE(10, 2)                  NOT NULL,
+  `Coefficient` DOUBLE(8, 3)                   NOT NULL,
   `Result`      VARCHAR(50)                   NOT NULL,
-  `Comment`     TEXT                          NULL,
+  `Comment`     VARCHAR(255)                          NULL,
   `UserID` BIGINT(11) NOT NULL,
   PRIMARY KEY (`StakeID`),
   CONSTRAINT UserStakesFK FOREIGN KEY (`UserID`) REFERENCES users(`UserID`)
