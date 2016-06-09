@@ -42,18 +42,17 @@
         <th>Comment</th>
     </tr>
     <c:set var="stakeList" scope="session" value='<%= request.getAttribute("data")%>'/>
-    <c:set var="gamblingSiteList" scope="session" value='<%= request.getAttribute("data") %>'/>
     <c:if test="${not empty stakeList}">
-        <c:forEach var="stake" varStatus="status" items="${stakeList}">
+        <c:forEach var="stake" items="${stakeList}">
             <tr>
-                <td width="150px"><c:out value="${stake.date}"/></td>
-                <td width="150px"><c:out value="${stake.url}"/></td>
-                <td width="150px"><c:out value="${stake.event}"/></td>
-                <td width="150px"><c:out value="${stake.betType}"/></td>
-                <td width="150px"><c:out value="${stake.betAmount}"/></td>
-                <td width="150px"><c:out value="${stake.coefficient}"/></td>
-                <td width="150px"><c:out value="${stake.result}"/></td>
-                <td width="150px"><c:out value="${stake.comment}"/></td>
+                <td width="150px">${stake.date}</td>
+                <td width="150px">${stake.url}</td>
+                <td width="150px">${stake.event}</td>
+                <td width="150px">${stake.betType}</td>
+                <td width="150px">${stake.betAmount}</td>
+                <td width="150px">${stake.coefficient}</td>
+                <td width="150px">${stake.result}</td>
+                <td width="150px">${stake.comment}</td>
             </tr>
         </c:forEach>
     </c:if>

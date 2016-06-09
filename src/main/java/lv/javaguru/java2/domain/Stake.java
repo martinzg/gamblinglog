@@ -1,19 +1,43 @@
 package lv.javaguru.java2.domain;
 
+import javax.persistence.*;
 import java.util.Date;
+
+@Entity
+@Table(name = "stakes")
 
 /**
  * Created by tyoma17 on 29.03.2016.
  */
 public class Stake {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "StakeID", nullable = false)
     private long stakeID;
+
+    @Column(name = "Date", nullable = false)
     private Date date;
+
+    @Column(name = "URL", nullable = false)
     private String url;
+
+    @Column(name = "Event", nullable = false)
     private String event;
+
+    @Column(name = "BetType", nullable = false)
     private String betType;
+
+    @Column(name = "BetAmount", nullable = false)
     private double betAmount;
+
+    @Column(name = "Coefficient", nullable = false)
     private double coefficient;
+
+    @Column(name = "Result", nullable = false)
     private String result;
+
+    @Column(name = "Comment", nullable = false)
     private String comment;
     private Long userId;
 

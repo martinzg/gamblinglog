@@ -51,7 +51,7 @@ public class StakeAddController implements MVCController {
 
     private void getStakeAddData(Stake stake, HttpServletRequest request) throws DBException {
         String str = request.getParameter("date");
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
             date = sdf.parse(str);
@@ -66,7 +66,7 @@ public class StakeAddController implements MVCController {
         stake.setCoefficient(Double.parseDouble(request.getParameter("coefficient")));
         stake.setResult(request.getParameter("result"));
         stake.setComment(request.getParameter("comment"));
-        stake.setUserId(Long.parseLong(userDAO.getIdByEmail(request.getUserPrincipal().getName()).toString()));
+        stake.setUserId(userDAO.getIdByEmail(request.getUserPrincipal().getName()));
     }
 
 }

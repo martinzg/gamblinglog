@@ -1,6 +1,6 @@
 package lv.javaguru.java2.servlet.mvc;
 
-import lv.javaguru.java2.database.DBException;
+
 import lv.javaguru.java2.database.StakeDAO;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.Stake;
@@ -26,13 +26,9 @@ public class StakesController implements MVCController {
     @Override
     public MVCModel processRequestGet(HttpServletRequest request, HttpServletResponse resp) {
 
-        try {
-            Long id = userDAO.getIdByEmail(request.getUserPrincipal().getName().toString());
-            List<Stake> stakeList = stakeDAO.getAllStakes(id);
-            return new MVCModel("/Stakes.jsp", stakeList, null);
-        } catch (DBException e) {
-            throw new RuntimeException(e);
-        }
+        Long id = userDAO.getIdByEmail(request.getUserPrincipal().getName());
+        List<Stake> stakeList = stakeDAO.getAllStakes(id);
+        return new MVCModel("/Stakes.jsp", stakeList, null);
     }
 
     @Override
