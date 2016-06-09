@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `java2_test`.`user_messages` (
 DROP TABLE IF EXISTS `java2_test`.`stakes` ;
 
 CREATE TABLE IF NOT EXISTS `java2_test`.`stakes` (
-  `StakeID`    INT(11)                       NOT NULL AUTO_INCREMENT,
+  `StakeID`    BIGINT(11)                       NOT NULL AUTO_INCREMENT,
   `Date`        DATE                         NOT NULL,
   `URL`         VARCHAR(50)                   NOT NULL,
   `Event`       VARCHAR(50)                   NOT NULL,
