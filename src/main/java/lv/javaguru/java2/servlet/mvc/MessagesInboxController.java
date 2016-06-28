@@ -41,7 +41,7 @@ public class MessagesInboxController {
     @RequestMapping(value = "messages/inbox/{id}", method = {RequestMethod.GET})
     public ModelAndView processGetOneRequest(@PathVariable("id") Long id, HttpServletRequest request, HttpServletResponse response) {
         SetHeaderNoCache.setNoCache(response);
-        UserMessage userMessage = messageDAO.getMessageById(id);
+        UserMessage userMessage = messageDAO.getById(id);
         if (userMessage != null){
             if (userMessage.getUserTo().equals(request.getUserPrincipal().getName())){
                 userMessage.setReadState(true);

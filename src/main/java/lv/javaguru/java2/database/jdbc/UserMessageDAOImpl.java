@@ -37,20 +37,6 @@ public class UserMessageDAOImpl extends GenericHibernateDAOImpl<UserMessage> imp
 
     @SuppressWarnings("unchecked")
     @Transactional
-    public UserMessage getMessageById(Long id) throws JDBCException {
-        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(persistentClass);
-        criteria.add(Restrictions.eq("id", id));
-        if (criteria.list().size() > 0){
-            return (UserMessage) criteria.list().get(0);
-        }
-        else {
-            return null;
-        }
-
-    }
-
-    @SuppressWarnings("unchecked")
-    @Transactional
     public int getUnreadMessageCountByUserNameTo(String userName) throws JDBCException {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(persistentClass);
         criteria.setProjection(Projections.rowCount());

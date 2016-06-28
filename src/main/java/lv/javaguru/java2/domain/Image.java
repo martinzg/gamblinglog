@@ -2,6 +2,8 @@ package lv.javaguru.java2.domain;
 
 import javax.persistence.*;
 import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Arrays;
 
 @Entity
 @Table(name = "user_images")
@@ -53,5 +55,48 @@ public class Image {
         this.image = image;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Image)){
+            return false;
+        }
+        Image img = (Image) o;
+        return this.id == img.getId() &&
+                this.userId == (img.getUserId()) &&
+                this.imageName.equals(img.getImageName()) &&
+                compareBlobLength(img) &&
+                compareBlobBytes(img);
+    }
+
+    private Boolean compareBlobLength(Image img){
+        try{
+            return this.image.length() == img.getImage().length();
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private Boolean compareBlobBytes(Image img){
+        try{
+            byte[] thisArray = this.image.getBytes(0L, (int)image.length());
+            byte[] imgArray = img.getImage().getBytes(0L, (int)img.getImage().length());
+            return Arrays.equals(thisArray, imgArray);
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
+        result = 31 * result + (imageName != null ? imageName.hashCode() : 0);
+        result = 31 * result + (image != null ? image.hashCode() : 0);
+        return result;
+    }
 }
 

@@ -17,7 +17,7 @@ public class ImageDAOImpl extends GenericHibernateDAOImpl<Image> implements Imag
     public Image getImageByUserId(Long userID) throws JDBCException {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(persistentClass);
         criteria.add(Restrictions.eq("userId", userID));
-        return (Image)criteria.list().get(0);
+        return criteria.list().size() == 1 ? (Image)criteria.list().get(0) : null;
     }
 
 }
