@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -37,7 +38,6 @@ public class ImageDAOImplTest {
     private ImageDAO imageDAO;
 
     private String email = "email@email.com";
-    String emailTwo = "emailTwo@emailTwo.com";
 
     @Before
     public void init() throws JDBCException {
@@ -50,20 +50,21 @@ public class ImageDAOImplTest {
     }
 
     @Test
-    public void testGetImageByUserId() throws Exception {
-        Image imageOne = imageDAO.getImageByUserId(userDAO.getIdByEmail(email));
+    public void createAndGetImageByUserIdTest() throws Exception {
+        imageDAO.delete(imageDAO.getImageByUserId(userDAO.getIdByEmail(email)).getId());
+        Image image = createNewImage();
+        imageDAO.create(image);
 
-        assertEquals(createNewImage(), imageOne);
-        //assertEquals(getResourceImageAsBlob().length(), image.getImage().length() - 148);
+        assertEquals(image, imageDAO.getImageByUserId(userDAO.getIdByEmail(email)));
     }
 
     @Test
-    public void testGetImageByUserIdNull() throws Exception {
+    public void getImageByUserIdNullTest() throws Exception {
         assertNull(imageDAO.getImageByUserId(1L));
     }
 
     @Test
-    public void testUpdateImage(){
+    public void updateImageTest(){
         Image image = imageDAO.getImageByUserId(userDAO.getIdByEmail(email));
         updateImageNameAndImageBlob(image);
         imageDAO.update(image);
@@ -73,21 +74,28 @@ public class ImageDAOImplTest {
     }
 
     @Test
-    public void testGetAllImages(){
+    public void getAllImagesTest() {
         Image image = imageDAO.getImageByUserId(userDAO.getIdByEmail(email));
+        List<Image> imageList = imageDAO.getAll();
 
-        assertTrue(imageDAO.getAll().size() >= 1);
+        assertTrue(imageList.size() >= 1);
+        assertTrue(checkListOfImages(imageList, image));
     }
 
     @Test
-    public void testGetImageById() throws SQLException{
+    public void getImageByIdTest() throws SQLException{
         Image image = imageDAO.getImageByUserId(userDAO.getIdByEmail(email));
 
         assertEquals(image, imageDAO.getById(image.getId()));
     }
 
     @Test
-    public void testDeleteImage(){
+    public void getImageByIdNullTest() throws SQLException{
+        assertNull(imageDAO.getById(1L));
+    }
+
+    @Test
+    public void deleteImageTest(){
         Image image = imageDAO.getImageByUserId(userDAO.getIdByEmail(email));
         imageDAO.delete(image.getId());
 
@@ -124,5 +132,13 @@ public class ImageDAOImplTest {
         image.setImage(stringToSerialBlob());
     }
 
+    private Boolean checkListOfImages (List<Image> imageList, Image image){
+        for (Image item : imageList){
+            if (item.equals(image)){
+                return true;
+            }
+        }
+        return false;
+    }
 
 }

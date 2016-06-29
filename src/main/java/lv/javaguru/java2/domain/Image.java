@@ -80,8 +80,8 @@ public class Image {
 
     private Boolean compareBlobBytes(Image img){
         try{
-            byte[] thisArray = this.image.getBytes(0L, (int)image.length());
-            byte[] imgArray = img.getImage().getBytes(0L, (int)img.getImage().length());
+            byte[] thisArray = this.image.getBytes(1L, (int)image.length());
+            byte[] imgArray = img.getImage().getBytes(1L, (int)img.getImage().length());
             return Arrays.equals(thisArray, imgArray);
         }
         catch (SQLException e){
