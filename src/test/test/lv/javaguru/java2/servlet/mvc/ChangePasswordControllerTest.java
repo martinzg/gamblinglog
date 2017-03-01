@@ -1,5 +1,6 @@
 package test.lv.javaguru.java2.servlet.mvc;
 
+
 import lv.javaguru.java2.database.DBException;
 import lv.javaguru.java2.database.UserDAO;
 import lv.javaguru.java2.domain.User;
